@@ -1,20 +1,16 @@
 {
   "name": "blog-api",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
   "scripts": {
-    "start": "node ./bin/www",
-    "devstart": "nodemon ./bin/www"
+    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "npm run serverstart --prefix server",
+    "client": "npm start --prefix client",
+    "server-dev": "npm run devstart --prefix server"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "mongoose": "^8.5.2",
-    "morgan": "~1.9.1"
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "concurrently": "^8.2.2"
   }
 }
