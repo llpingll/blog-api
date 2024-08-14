@@ -1,1 +1,59 @@
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
+const User = require("../models/user");
+var jwt = require("jsonwebtoken");
+
+exports.loginController = [
+  // Sanitize input data
+  body("email", "Email must be a valid email address.")
+    .trim()
+    .isEmail()
+    .toLowerCase()
+    .escape(),
+  body(
+    "password",
+    "Password must not be empty and must not have more than 30 characters."
+  )
+    .trim()
+    .isLength({ min: 1, max: 30 })
+    .escape(),
+
+  // Process sanitized data
+  asyncHandler(async (req, res) => {
+    // Get validation result object
+    const errors = validationResult(req);
+
+    // Case, vlidation error
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+
+    // Check for valid user
+    const user = await User.findOne({ email: req.body.email }).exec();
+    if (!user) {
+      res.status(400).json({ error: "User not found" });
+      return;
+    }
+
+    // Check password
+    const match = await bcrypt.compare(req.body.password, user.password);
+    if (!match) {
+      res.status(400).json({ error: "Invalid password" });
+      return;
+    }
+
+    // Issue JWT token
+    try {
+      const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, {
+        // RS256 is an asymmetric algorithm that uses a public/private key pair to sign/verify
+        // HS256 is the default symmetric algorithm that uses only a private key to sign and verify
+        // algorithm: "HS256",
+        expiresIn: "2d",
+      });
+      res.status(200).json({ message: "Login successful", token });
+    } catch (error) {
+      return res.status(401).json({ message: "JWT issue error" });
+    }
+  }),
+];

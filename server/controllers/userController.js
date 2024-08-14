@@ -32,7 +32,8 @@ exports.createUser = [
     .isIn(["admin", "user"]),
 
   // Process sanitized data
-  asyncHandler((req, res) => {
+  asyncHandler(async (req, res) => {
+    // Get validation result object
     const errors = validationResult(req);
 
     // Case, validation error
@@ -42,7 +43,7 @@ exports.createUser = [
     }
 
     // Check if user exists
-    const existingUser = User.findOne({ email: req.body.email });
+    const existingUser = await User.findOne({ email: req.body.email }).exec();
     if (existingUser) {
       res.status(400).json({ error: "User with this email already exists" });
       return;
