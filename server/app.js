@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const passport = require("./auth"); // Import the configured Passport instance
 
 const indexRouter = require("./routes/index");
 
@@ -13,6 +14,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+// Initialize Passport
+app.use(passport.initialize());
 
 // Routes
 app.use("/", indexRouter);

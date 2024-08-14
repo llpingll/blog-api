@@ -42,7 +42,7 @@ exports.createUser = [
     }
 
     // Check if user exists
-    const existingUser = user.findOne({ email: req.body.email });
+    const existingUser = User.findOne({ email: req.body.email });
     if (existingUser) {
       res.status(400).json({ error: "User with this email already exists" });
       return;
