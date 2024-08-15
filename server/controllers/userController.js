@@ -66,7 +66,7 @@ exports.createUser = [
       }
       // otherwise, store hashedPassword in DB
       try {
-        password = hashedPassword;
+        user.password = hashedPassword;
         await user.save();
         res.status(200).json({ message: "Signup Successful" });
       } catch (error) {

@@ -2,6 +2,12 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const User = require("../models/user");
 var jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+
+// Load environment variables from .env file if not in production (Check can be omitted)
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 exports.loginController = [
   // Sanitize input data
