@@ -2,7 +2,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const passport = require("./auth"); // Import the configured Passport instance
+const { passport } = require("./auth"); // Import the configured Passport instance
 
 const indexRouter = require("./routes/index");
 

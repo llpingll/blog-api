@@ -7,6 +7,15 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
+// Custom middleware to check if user has admin rights
+const ensureAdmin = (req, res, next) => {
+  if (req.user && req.user.admin) {
+    return next(); // User is authenticated and has admin rights
+  } else {
+    return res.status(403).json({ message: "Forbidden: Admins only" });
+  }
+};
+
 // Configure the JWT strategy
 passport.use(
   new Strategy(
@@ -31,4 +40,4 @@ passport.use(
   )
 );
 
-module.exports = passport;
+module.exports = { passport, ensureAdmin };
