@@ -79,20 +79,16 @@ exports.createUser = [
 
 exports.getAllUsers = asyncHandler(async (req, res) => {
   // Query database for all users
-  const users = User.find({}).exec();
+  const users = User.find().exec();
 
-  if (!users) {
-    res.status(200).json({ error: "No users found" });
-  } else {
-    res.status(200).json({ users });
-  }
+  res.status(200).json({ users });
 });
 
 exports.getUser = asyncHandler(async (req, res) => {
   const user = User.findById(req.params.id).exec();
 
   if (!user) {
-    res.status(200).json({ error: "No user found" });
+    res.status(404).json({ error: "No user found" });
   } else {
     res.status(200).json({ user });
   }
@@ -159,8 +155,7 @@ exports.updateUser = [
         await User.findByIdAndUpdate(req.params.id, user, {});
         res.status(200).json({ user, message: "Update Successful" });
       } catch (error) {
-        console.error("Failed to update user:", error);
-        res.status(500).json({ error: "Failed to update user" });
+        next(error);
       }
     });
   }),

@@ -8,11 +8,11 @@ const { passport, ensureAdmin } = require("./auth");
 router.post("/login", authController.loginController);
 
 // Handle users
-router.post("/users", userController.createUser); // Done
-router.get("/users", passport.authenticate("jwt", { session: false }), userController.getAllUsers); // Done
-router.get("/users/:id", passport.authenticate("jwt", { session: false }), userController.getUser); // Done
-router.put("/users/:id", passport.authenticate("jwt", passport.authenticate("jwt", { session: false }), { session: false }), userController.updateUser); // Done
-router.delete("/users/:id", passport.authenticate("jwt", passport.authenticate("jwt", { session: false }), { session: false }), userController.deleteUser); // Done
+router.post("/users", userController.createUser);
+router.get("/users", passport.authenticate("jwt", { session: false }), userController.getAllUsers);
+router.get("/users/:id", passport.authenticate("jwt", { session: false }), userController.getUser);
+router.put("/users/:id", passport.authenticate("jwt", passport.authenticate("jwt", { session: false }), { session: false }), userController.updateUser);
+router.delete("/users/:id", passport.authenticate("jwt", passport.authenticate("jwt", { session: false }), { session: false }), userController.deleteUser);
 
 // Handle posts
 router.get("/post", postController.getAllPosts);
@@ -23,10 +23,10 @@ router.put("/post", passport.authenticate("jwt", { session: false }), ensureAdmi
 router.delete("/post/:id", passport.authenticate("jwt", { session: false }), ensureAdmin, postController.deletPost);
 
 // Handle comments
-router.get("/post/:id/comments", postController.getAllComments);
-router.get("/post/:id/comments/:id", postController.getComment);
-router.post("/post/:id/comments", passport.authenticate("jwt", { session: false }), postController.createComment);
-router.put("/post/:id/comments/:id", passport.authenticate("jwt", { session: false }), postController.updateComment);
-router.delete("/post/:id/comments/:id", passport.authenticate("jwt", { session: false }), postController.deletComment);
+router.get("/post/:postId/comments", postController.getAllPostComments);
+router.get("/post/:postId/comments/:id", postController.getComment);
+router.post("/post/:postId/comments", passport.authenticate("jwt", { session: false }), postController.createComment);
+router.put("/post/:postId/comments/:id", passport.authenticate("jwt", { session: false }), postController.updateComment);
+router.delete("/post/:postId/comments/:id", passport.authenticate("jwt", { session: false }), postController.deletComment);
 
 module.exports = router;
