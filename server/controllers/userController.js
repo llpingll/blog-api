@@ -123,7 +123,7 @@ exports.updateUser = [
     .isIn(["admin", "user"]),
 
   // Process sanitized data
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     // Get validation result object
     const errors = validationResult(req);
 

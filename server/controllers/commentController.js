@@ -22,7 +22,7 @@ exports.createComment = [
     .withMessage("Invalid post ID"),
 
   // Process sanitized data
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
     // Check for validation errors
@@ -55,7 +55,7 @@ exports.createComment = [
 
     try {
       // Data from form is valid
-      await Comment.save().exec();
+      await comment.save().exec();
       res.status(200).json(comment);
     } catch (error) {
       next(error);
@@ -106,7 +106,7 @@ exports.updateComment = [
     .withMessage("Invalid post ID"),
 
   // Process sanitized data
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
     // Create a new comment object with escaped and trimmed data
@@ -147,7 +147,7 @@ exports.updateComment = [
   }),
 ];
 
-exports.deleteComment = asyncHandler(async (req, res) => {
+exports.deleteComment = asyncHandler(async (req, res, next) => {
   try {
     const comment = Comment.findByIdAndDelete(req.params.id, { new: true });
 

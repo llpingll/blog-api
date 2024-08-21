@@ -27,9 +27,6 @@ const postSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  source: {
-    type: String,
-  },
 });
 
 // Virtual for post's URL
