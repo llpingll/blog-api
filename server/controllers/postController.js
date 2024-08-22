@@ -59,19 +59,21 @@ exports.createPost = [
 ];
 
 exports.getAllPosts = asyncHandler(async (req, res) => {
-  const posts = Post.find().sort({ created_at: -1 }).exec();
+  const posts = await Post.find().sort({ created_at: -1 }).exec();
 
   res.status(200).json({ posts });
 });
 
 exports.getPublishedPosts = asyncHandler(async (req, res) => {
-  const posts = Post.find({ published: true }).sort({ created_at: -1 }).exec();
+  const posts = await Post.find({ published: true })
+    .sort({ created_at: -1 })
+    .exec();
 
   res.status(200).json({ posts });
 });
 
 exports.getPost = asyncHandler(async (req, res) => {
-  const post = Post.findById(req.params.id).populate("author").exec();
+  const post = await Post.findById(req.params.id).populate("author").exec();
 
   res.status(200).json({ post });
 });
@@ -132,7 +134,7 @@ exports.updatePost = [
 
 exports.deletePost = asyncHandler(async (req, res, next) => {
   try {
-    const post = Post.findByIdAndDelete(req.params.id, { new: true });
+    const post = await Post.findByIdAndDelete(req.params.id, { new: true });
 
     if (!post) {
       res.status(404).json({ error: "Post not found" });

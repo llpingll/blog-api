@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Comment = require("../models/comment");
-const { body, validationResult } = require("express-validator");
+const { body, check, validationResult } = require("express-validator");
 
 exports.createComment = [
   // Validate and sanitize fields
