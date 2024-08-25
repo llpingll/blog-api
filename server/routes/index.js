@@ -10,14 +10,14 @@ const { passport, ensureAdmin } = require("../auth");
 router.post("/login", authController.loginController);
 
 // Handle users
-router.post("/users", userController.createUser); // Tested
-router.get("/users", passport.authenticate("jwt", { session: false }), ensureAdmin, userController.getAllUsers); // Tested
-router.get("/users/:id", passport.authenticate("jwt", { session: false }), userController.getUser); // Tested
-router.put("/users/:id", passport.authenticate("jwt", { session: false }), userController.updateUser); // Tested
+router.post("/users", userController.createUser);
+router.get("/users", passport.authenticate("jwt", { session: false }), ensureAdmin, userController.getAllUsers);
+router.get("/users/:id", passport.authenticate("jwt", { session: false }), userController.getUser);
+router.put("/users/:id", passport.authenticate("jwt", { session: false }), userController.updateUser);
 router.delete("/users/:id", passport.authenticate("jwt", { session: false }), userController.deleteUser);
 
 // Handle posts
-router.get("/post", postController.getAllPosts);
+router.get("/post", ensureAdmin, postController.getAllPosts);
 router.get("/post/published", postController.getPublishedPosts);
 router.get("/post/:id", postController.getPost);
 router.post("/post", passport.authenticate("jwt", { session: false }), ensureAdmin, postController.createPost);
