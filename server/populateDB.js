@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+const bcrypt = require("bcryptjs");
 
 console.log(
   'This script populates some user, post and comment instances to your database. Specified database as argument - e.g.: node populatedb "mongodb+srv://cooluser:coolpassword@cluster0.lz91hw2.mongodb.net/local_library?retryWrites=true&w=majority"'
@@ -16,6 +17,7 @@ const posts = [];
 const comments = [];
 
 const mongoose = require("mongoose");
+const user = require("./models/user");
 mongoose.set("strictQuery", false);
 
 const mongoDB = userArgs[0];
@@ -34,11 +36,21 @@ async function main() {
   console.log("Connection closed");
 }
 
+async function hashPassword(password) {
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    return hashedPassword;
+  } catch (err) {
+    console.error("Hash error", err);
+    throw err;
+  }
+}
+
 async function createUsers() {
   console.log("Creating users...");
   const user1 = new User({
     name: "user1",
-    password: "password1",
+    password: await hashPassword("password2"),
     email: "user1@mail.com",
     type: "user",
   });
@@ -47,7 +59,7 @@ async function createUsers() {
 
   const user2 = new User({
     name: "user2",
-    password: "password2",
+    password: await hashPassword("password2"),
     email: "user2@mail.com",
     type: "user",
   });
@@ -56,7 +68,7 @@ async function createUsers() {
 
   const admin = new User({
     name: "admin",
-    password: "admin",
+    password: await hashPassword("admin"),
     email: "admin@mail.com",
     type: "admin",
   });
