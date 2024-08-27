@@ -26,7 +26,7 @@ router.delete("/post/:id", passport.authenticate("jwt", { session: false }), ens
 
 // Handle comments
 router.get("/post/:postId/comments", commentController.getAllPostComments);
-router.get("/post/:postId/comments/:id", commentController.getComment);
+router.get("/post/:postId/comments/:id", passport.authenticate("jwt", { session: false }), commentController.getComment);
 router.post("/post/:postId/comments", passport.authenticate("jwt", { session: false }), commentController.createComment);
 router.put("/post/:postId/comments/:id", passport.authenticate("jwt", { session: false }), commentController.updateComment);
 router.delete("/post/:postId/comments/:id", passport.authenticate("jwt", { session: false }), commentController.deleteComment);

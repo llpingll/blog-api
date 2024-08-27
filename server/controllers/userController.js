@@ -212,7 +212,7 @@ exports.deleteUser = asyncHandler(async (req, res) => {
   // prettier-ignore
   if (req.user._id.toString() !== req.params.id && req.user.type !== "admin") {
       return res.status(403).json({ error: "Forbidden: Users can only be deleted by owners or admin" });
-    }
+  }
 
   try {
     const user = await User.findByIdAndDelete(req.params.id, { new: true });

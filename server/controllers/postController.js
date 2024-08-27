@@ -44,7 +44,7 @@ exports.createPost = [
     // Check for errors
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/error messages
-      res.json({ errors: errors.array() });
+      res.status(400).json({ errors: errors.array() });
       return;
     }
 
@@ -119,7 +119,7 @@ exports.updatePost = [
     // Check for errors
     if (!errors.isEmpty()) {
       // There are errors. Respond with sanitized values/error messages
-      res.json({ errors: errors.array() });
+      res.status(400).json({ errors: errors.array() });
       return;
     }
 
