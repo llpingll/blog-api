@@ -10,18 +10,18 @@ const { passport, ensureAdmin } = require("../auth");
 router.post("/login", authController.loginController);
 
 // Handle users
-router.post("/users", userController.createUser);
 router.get("/users", passport.authenticate("jwt", { session: false }), ensureAdmin, userController.getAllUsers);
 router.get("/users/:id", passport.authenticate("jwt", { session: false }), userController.getUser);
+router.post("/users", userController.createUser);
 router.put("/users/:id", passport.authenticate("jwt", { session: false }), userController.updateUser);
 router.delete("/users/:id", passport.authenticate("jwt", { session: false }), userController.deleteUser);
 
 // Handle posts
-router.get("/post", ensureAdmin, postController.getAllPosts);
+router.get("/post",passport.authenticate("jwt", { session: false }), ensureAdmin, postController.getAllPosts);
 router.get("/post/published", postController.getPublishedPosts);
 router.get("/post/:id", postController.getPost);
 router.post("/post", passport.authenticate("jwt", { session: false }), ensureAdmin, postController.createPost);
-router.put("/post", passport.authenticate("jwt", { session: false }), ensureAdmin, postController.updatePost);
+router.put("/post/:id", passport.authenticate("jwt", { session: false }), ensureAdmin, postController.updatePost);
 router.delete("/post/:id", passport.authenticate("jwt", { session: false }), ensureAdmin, postController.deletePost);
 
 // Handle comments

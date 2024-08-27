@@ -44,16 +44,17 @@ exports.createPost = [
     // Check for errors
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/error messages
-      res.json({ post, errors: errors.array() });
+      res.json({ errors: errors.array() });
       return;
     }
 
     try {
       // Data from form is valid
-      await post.save().exec();
-      res.status(200).json({ comment });
+      await post.save();
+      res.status(200).json(post);
     } catch (error) {
-      next(error);
+      console.error("Failed to save post:", error);
+      res.status(500).json({ error: "Failed to save post" });
     }
   }),
 ];
@@ -61,7 +62,7 @@ exports.createPost = [
 exports.getAllPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find().sort({ created_at: -1 }).exec();
 
-  res.status(200).json({ posts });
+  res.status(200).json(posts);
 });
 
 exports.getPublishedPosts = asyncHandler(async (req, res) => {
@@ -69,13 +70,13 @@ exports.getPublishedPosts = asyncHandler(async (req, res) => {
     .sort({ created_at: -1 })
     .exec();
 
-  res.status(200).json({ posts });
+  res.status(200).json(posts);
 });
 
 exports.getPost = asyncHandler(async (req, res) => {
   const post = await Post.findById(req.params.id).populate("author").exec();
 
-  res.status(200).json({ post });
+  res.status(200).json(post);
 });
 
 exports.updatePost = [
@@ -96,6 +97,7 @@ exports.updatePost = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
+  body("source").optional({ checkFalsy: true }).trim().escape(),
 
   // Process request after validation and sanitization
   asyncHandler(async (req, res, next) => {
@@ -103,7 +105,7 @@ exports.updatePost = [
     const errors = validationResult(req);
 
     // Create a post object with escaped and trimmed data
-    const post = new Post({
+    const updatedData = {
       title: req.body.title,
       content: req.body.content,
       image_url: req.body.image_url,
@@ -112,22 +114,29 @@ exports.updatePost = [
       author: req.user._id, // req.user is set in the auth middleware
       _id: req.params.id,
       source: req.body.source,
-    });
+    };
 
     // Check for errors
     if (!errors.isEmpty()) {
       // There are errors. Respond with sanitized values/error messages
-      res.json({ post: post, errors: errors.array() });
+      res.json({ errors: errors.array() });
       return;
     }
 
     try {
       // Data from form is valid
       // Save post
-      await Post.findByIdAndUpdate(req.params.id, post, {});
-      res.status(200).json({ post });
+      const updatedPost = await Post.findByIdAndUpdate(
+        req.params.id,
+        updatedData,
+        {
+          new: true,
+        }
+      );
+      res.status(200).json({ post: updatedPost, message: "Update Successful" });
     } catch (error) {
-      next(error);
+      console.error("Failed to update post:", error);
+      res.status(500).json({ error: "Failed to update post" });
     }
   }),
 ];
@@ -141,8 +150,9 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
       return;
     }
 
-    res.status(200).json({ message: "Post deleted successfully" });
+    res.status(200).json({ post, message: "Post deleted successfully" });
   } catch (error) {
-    next(error);
+    console.error("Failed to delete post:", error);
+    res.status(500).json({ error: "Failed to delete post" });
   }
 });

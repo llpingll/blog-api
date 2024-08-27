@@ -9,7 +9,6 @@ if (process.env.NODE_ENV !== "production") {
 
 // Custom middleware to check if user has admin rights
 const ensureAdmin = (req, res, next) => {
-  console.log(req.user);
   if (req.user && req.user.type === "admin") {
     return next(); // User is authenticated and has admin rights
   } else {

@@ -50,7 +50,7 @@ async function createUsers() {
   console.log("Creating users...");
   const user1 = new User({
     name: "user1",
-    password: await hashPassword("password2"),
+    password: await hashPassword("password1"),
     email: "user1@mail.com",
     type: "user",
   });

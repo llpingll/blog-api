@@ -200,7 +200,8 @@ exports.updateUser = [
           .status(200)
           .json({ user: updatedUser, message: "Update Successful" });
       } catch (error) {
-        next(error);
+        console.error("Failed to update user:", error);
+        res.status(500).json({ error: "Failed to update user" });
       }
     }
   }),
@@ -223,6 +224,7 @@ exports.deleteUser = asyncHandler(async (req, res) => {
 
     res.status(200).json({ user, message: "User deleted successfully" });
   } catch (error) {
-    next(error);
+    console.error("Failed to delete user:", error);
+    res.status(500).json({ error: "Failed to delete user" });
   }
 });
