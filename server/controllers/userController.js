@@ -40,7 +40,9 @@ exports.createUser = [
     // Check if user exists
     const existingUser = await User.findOne({ email: req.body.email }).exec();
     if (existingUser) {
-      res.status(400).json({ error: "User with this email already exists" });
+      res
+        .status(400)
+        .json({ errors: [{ msg: "User with this email already exists" }] });
       return;
     }
 
@@ -56,17 +58,17 @@ exports.createUser = [
     bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
       // if err, return error response
       if (err) {
-        res.status(500).json({ error: "Password hash error" });
+        res.status(500).json({ errors: [{ msg: "Password hash error" }] });
         return;
       }
       // otherwise, store hashedPassword in DB
       try {
         user.password = hashedPassword;
         await user.save();
-        res.status(200).json({ message: "Signup Successful" });
+        res.status(200);
       } catch (error) {
         console.error("Failed to save user:", error);
-        res.status(500).json({ error: "Failed to save user" });
+        res.status(500).json({ errors: [{ msg: "Failed to save user" }] });
       }
     });
   }),

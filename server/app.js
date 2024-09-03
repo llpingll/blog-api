@@ -3,6 +3,7 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const { passport } = require("./auth"); // Import the configured Passport instance
+const cors = require("cors");
 
 const indexRouter = require("./routes/index");
 
@@ -15,11 +16,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+// Enable CORS
+app.use(cors());
+
 // Initialize Passport
 app.use(passport.initialize());
 
 // Routes
-app.use("/", indexRouter);
+app.use("/api", indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
