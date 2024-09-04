@@ -38,14 +38,14 @@ exports.loginController = [
     // Check for valid user
     const user = await User.findOne({ email: req.body.email }).exec();
     if (!user) {
-      res.status(400).json({ error: "User not found" });
+      res.status(400).json({ errors: [{ msg: "User not found" }] });
       return;
     }
 
     // Check password
     const match = await bcrypt.compare(req.body.password, user.password);
     if (!match) {
-      res.status(400).json({ error: "Invalid password" });
+      res.status(400).json({ errors: [{ msg: "Invalid password" }] });
       return;
     }
 
@@ -57,9 +57,9 @@ exports.loginController = [
         // algorithm: "HS256",
         expiresIn: "2d",
       });
-      res.status(200).json({ message: "Login successful", token });
+      res.status(200).json(token);
     } catch (error) {
-      return res.status(401).json({ message: "JWT issue error" });
+      return res.status(401).json({ errors: [{ msg: "JWT issue error" }] });
     }
   }),
 ];

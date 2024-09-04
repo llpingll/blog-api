@@ -52,14 +52,11 @@ const Signup = () => {
         throw err;
       }
 
-      // Parse response body
-      const successMessage = await response.json();
-
       // Redirect to login page
       navigate("/login");
     } catch (error) {
       if (error.errors) {
-        // Server returned errpr
+        // Server returned error
         setErrors(error.errors);
       } else if (error instanceof TypeError) {
         // Network error
