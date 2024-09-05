@@ -57,7 +57,7 @@ exports.loginController = [
         // algorithm: "HS256",
         expiresIn: "2d",
       });
-      res.status(200).json(token);
+      res.status(200).json({ token });
     } catch (error) {
       return res.status(401).json({ errors: [{ msg: "JWT issue error" }] });
     }

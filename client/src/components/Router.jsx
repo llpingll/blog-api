@@ -8,6 +8,7 @@ import EditPost from "../components/EditPost";
 import PostDetail from "../pages/PostDetail";
 import ErrorPage from "../pages/ErrorPage";
 import AdminLayout from "../pages/AdminLayout";
+import AuthProvider from "./provider/AuthProvider";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -42,7 +43,11 @@ const Router = () => {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
+  );
 };
 
 export default Router;

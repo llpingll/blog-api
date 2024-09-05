@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../components/provider/AuthProvider";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState(null);
+
+  const navigate = useNavigate();
+  const { setToken } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,10 +49,13 @@ const Login = () => {
         throw err;
       }
 
-      // Otherwise store token in local storage and redirect to home page
+      // Otherwise parse body, set token & redirect to homepage
+      const data = await response.json();
+      setToken(data.token);
+      navigate("/");
     } catch (error) {
       if (error.errors) {
-        // Error resonse from server
+        // Server returned error
         setErrors(error);
       } else if (error instanceof TypeError) {
         // Network error
