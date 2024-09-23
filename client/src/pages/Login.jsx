@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../components/provider/AuthProvider";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState(null);
+  const { state } = useLocation();
 
   const navigate = useNavigate();
   const { setToken } = useAuth();
@@ -52,7 +53,7 @@ const Login = () => {
       // Otherwise parse body, set token & redirect to homepage
       const data = await response.json();
       setToken(data.token);
-      navigate("/");
+      navigate(state?.path || "/");
     } catch (error) {
       if (error.errors) {
         // Server returned error

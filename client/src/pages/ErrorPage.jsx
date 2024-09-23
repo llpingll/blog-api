@@ -14,22 +14,22 @@ const ErrorPage = () => {
   );
 };
 
-const ErrorContainer = styled.div`
-  text-align: center;
-  background-size: cover;
-  background-position: center;
-  min-height: 100vh;
-  padding: 5rem 0;
-`;
+// const ErrorContainer = styled.div`
+//   text-align: center;
+//   background-size: cover;
+//   background-position: center;
+//   min-height: 100vh;
+//   padding: 5rem 0;
+// `;
 
-const Message = styled.h1`
-  font-size: 4rem;
-  color: ${({ theme }) => theme.colors.text};
-`;
+// const Message = styled.h1`
+//   font-size: 4rem;
+//   color: ${({ theme }) => theme.colors.text};
+// `;
 
-const LostLink = styled(Link)`
-  font-size: 2.5rem;
-  color: ${({ theme }) => theme.colors.text};
-`;
+// const LostLink = styled(Link)`
+//   font-size: 2.5rem;
+//   color: ${({ theme }) => theme.colors.text};
+// `;
 
 export default ErrorPage;

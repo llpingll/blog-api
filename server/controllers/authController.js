@@ -51,12 +51,16 @@ exports.loginController = [
 
     // Issue JWT token
     try {
-      const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, {
-        // RS256 is an asymmetric algorithm that uses a public/private key pair to sign/verify
-        // HS256 is the default symmetric algorithm that uses only a private key to sign and verify
-        // algorithm: "HS256",
-        expiresIn: "2d",
-      });
+      const token = jwt.sign(
+        { id: user.id, name: user.name, email: user.email, type: user.type },
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+          // RS256 is an asymmetric algorithm that uses a public/private key pair to sign/verify
+          // HS256 is the default symmetric algorithm that uses only a private key to sign and verify
+          // algorithm: "HS256",
+          expiresIn: "2d",
+        }
+      );
       res.status(200).json({ token });
     } catch (error) {
       return res.status(401).json({ errors: [{ msg: "JWT issue error" }] });

@@ -1,4 +1,5 @@
 import { useState, useContext, createContext, useMemo, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 // Create the AuthContext
 const AuthContext = createContext();
@@ -7,6 +8,7 @@ const AuthContext = createContext();
 // eslint-disable-next-line react/prop-types
 const AuthProvider = ({ children }) => {
   const [token, setToken_] = useState(localStorage.getItem("token"));
+  const [user, setUser] = useState(null);
 
   // Function to update the token in state and local storage
   const setToken = (newToken) => {
@@ -22,8 +24,10 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       localStorage.setItem("token", token);
+      setUser(jwtDecode(token));
     } else {
       localStorage.removeItem("token");
+      setUser(null);
     }
   }, [token]);
 
@@ -33,9 +37,10 @@ const AuthProvider = ({ children }) => {
       token,
       setToken,
       getAuthHeaders,
+      user,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [token]
+    [token, user]
   );
 
   // Provide the context to child components

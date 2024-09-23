@@ -1,5 +1,14 @@
+import { useAuth } from "../components/provider/AuthProvider";
+
 const Home = () => {
-  return <div>Home</div>;
+  const { token, setToken } = useAuth();
+
+  return (
+    <div>
+      Home
+      {token && <button onClick={() => setToken(null)}></button>}
+    </div>
+  );
 };
 
 export default Home;

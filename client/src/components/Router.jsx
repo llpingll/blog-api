@@ -15,6 +15,7 @@ const Router = () => {
     {
       path: "/",
       element: <Home />,
+      errorElement: <ErrorPage />,
     },
     {
       path: "/signup",
@@ -36,10 +37,6 @@ const Router = () => {
     {
       path: "/post/:postId",
       element: <PostDetail />,
-    },
-    {
-      path: "*",
-      element: <ErrorPage />,
     },
   ]);
 
