@@ -60,7 +60,10 @@ exports.createPost = [
 ];
 
 exports.getAllPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find().sort({ created_at: -1 }).exec();
+  const posts = await Post.find()
+    .sort({ created_at: -1 })
+    .populate("author")
+    .exec();
 
   res.status(200).json(posts);
 });
