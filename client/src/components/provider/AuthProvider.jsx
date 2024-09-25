@@ -50,6 +50,7 @@ const AuthProvider = ({ children }) => {
 };
 
 // Hook to allow easy access to the AuthContext
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   return useContext(AuthContext);
 };

@@ -31,11 +31,11 @@ const Router = () => {
       children: [
         { index: true, element: <Posts /> },
         { path: "new", element: <NewPost /> },
-        { path: "edit/:postId", element: <EditPost /> },
+        { path: "edit/:id", element: <EditPost /> },
       ],
     },
     {
-      path: "/post/:postId",
+      path: "/post/:id",
       element: <PostDetail />,
     },
   ]);

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "./provider/AuthProvider";
+import { Link } from "react-router-dom";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -26,7 +27,6 @@ const Posts = () => {
         }
 
         const data = await response.json();
-        console.log(data);
         setPosts(data);
       } catch (error) {
         if (error.errors) {
@@ -68,15 +68,18 @@ const Posts = () => {
     <div>
       {posts.length > 0 ? (
         posts.map((post) => (
-          <div key={post._id}>
+          <Link to={`/post/${post._id}`} key={post._id}>
             <h3>{post.title}</h3>
             <p>{post.content}</p>
             <div>
-              <p>Author: {post.author.name}</p>
-              <p>Created at: {new Date(post.created_at).toLocaleString()}</p>
+              <p>By {post.author.name}</p>
+              <p>
+                Created on{" "}
+                {new Date(post.created_at).toLocaleDateString("en-GB")}
+              </p>
               <p>Status: {post.published ? "Published" : "Not Published"}</p>
             </div>
-          </div>
+          </Link>
         ))
       ) : (
         <p>No Posts Found</p>
