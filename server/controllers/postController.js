@@ -136,7 +136,7 @@ exports.updatePost = [
           new: true,
         }
       );
-      res.status(200).json({ post: updatedPost, message: "Update Successful" });
+      res.status(200).json(updatedPost);
     } catch (error) {
       console.error("Failed to update post:", error);
       res.status(500).json({ error: "Failed to update post" });

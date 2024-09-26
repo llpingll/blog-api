@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../components/provider/AuthProvider";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Comments from "../components/Comments";
 
 const PostDetail = () => {
@@ -85,6 +85,11 @@ const PostDetail = () => {
             <p>Status: {post.published ? "Published" : "Not Published"}</p>
           )}
         </div>
+        {user && user.type === "admin" && (
+          <Link to={`/admin/edit/${id}`}>
+            <button>Edit Post</button>
+          </Link>
+        )}
       </div>
       <Comments
         showAddComment={showAddComment}
