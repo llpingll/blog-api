@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const { passport } = require("./auth"); // Import the configured Passport instance
 const cors = require("cors");
+const createError = require("http-errors");
 
 const indexRouter = require("./routes/index");
 

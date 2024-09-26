@@ -54,7 +54,6 @@ const NewPost = () => {
       // Check response
       if (!response.ok) {
         const err = await response.json();
-        console.log(err);
         throw err;
       }
 
