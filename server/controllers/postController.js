@@ -70,6 +70,7 @@ exports.getAllPosts = asyncHandler(async (req, res) => {
 
 exports.getPublishedPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find({ published: true })
+    .populate("author")
     .sort({ created_at: -1 })
     .exec();
 

@@ -7,23 +7,21 @@ import NewPost from "../components/NewPost";
 import EditPost from "../components/EditPost";
 import PostDetail from "../pages/PostDetail";
 import ErrorPage from "../pages/ErrorPage";
-import AdminLayout from "../pages/AdminLayout";
+import AdminLayout from "./AdminProtectedRoute";
 import AuthProvider from "./provider/AuthProvider";
+import CommonLayout from "../pages/CommonLayout";
 
 const Router = () => {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Home />,
+      element: <CommonLayout />,
       errorElement: <ErrorPage />,
-    },
-    {
-      path: "/signup",
-      element: <Signup />,
-    },
-    {
-      path: "/login",
-      element: <Login />,
+      children: [
+        { index: true, element: <Home /> },
+        { path: "signup", element: <Signup /> },
+        { path: "login", element: <Login /> },
+      ],
     },
     {
       path: "/admin",

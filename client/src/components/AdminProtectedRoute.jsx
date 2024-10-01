@@ -1,7 +1,8 @@
-import { Outlet, Navigate, useLocation } from "react-router-dom";
-import { useAuth } from "../components/provider/AuthProvider";
+import { Navigate, useLocation } from "react-router-dom";
+import { useAuth } from "./provider/AuthProvider";
+import CommonLayout from "../pages/CommonLayout";
 
-const AdminLayout = () => {
+const AdminProtectedRoute = () => {
   const { token, user } = useAuth();
   const location = useLocation();
 
@@ -10,10 +11,10 @@ const AdminLayout = () => {
   }
 
   return user && user.type === "admin" ? (
-    <Outlet />
+    <CommonLayout />
   ) : (
     <Navigate to="/login" replace state={{ path: location.pathname }} />
   );
 };
 
-export default AdminLayout;
+export default AdminProtectedRoute;
