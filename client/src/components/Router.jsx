@@ -21,6 +21,7 @@ const Router = () => {
         { index: true, element: <Home /> },
         { path: "signup", element: <Signup /> },
         { path: "login", element: <Login /> },
+        { path: "/post/:id", element: <PostDetail /> },
       ],
     },
     {
@@ -31,10 +32,6 @@ const Router = () => {
         { path: "new", element: <NewPost /> },
         { path: "edit/:id", element: <EditPost /> },
       ],
-    },
-    {
-      path: "/post/:id",
-      element: <PostDetail />,
     },
   ]);
 

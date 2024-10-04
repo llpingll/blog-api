@@ -1,6 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+  :root{
+    --16px: 1rem;
+    --24px: 1.5rem;
+    --32px: 2rem;
+    --300px: 18.75rem;
+  }
+
   *,
   *::before,
   *::after {
@@ -11,7 +18,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    font-size: 62.5%;
     line-height: 1.6;
     min-height: 100%;
     /* Footer & Cart support */
@@ -20,8 +26,8 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: "Noto Sans", sans-serif;
-    font-size: 1.6rem;
-    background-color: ${({ theme }) => theme.colors.dark};
+    font-size: var(--16px);
+    /* background-color: ${({ theme }) => theme.colors.dark}; */
   }
 
   h1,
@@ -35,6 +41,7 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
+    color: inherit;
   }
 
   img {
