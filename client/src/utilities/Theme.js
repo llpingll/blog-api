@@ -1,6 +1,6 @@
 const Theme = {
   colors: {
-    gunmetal: "#1F1F1F",
+    grey: "#979797",
     text: "#FFFFFF",
     textHover: "#EFEEEE",
     textActive: "#C0C0C0",

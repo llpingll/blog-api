@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "./provider/AuthProvider";
-import { Link } from "react-router-dom";
+import Post from "./Post";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
@@ -64,28 +64,7 @@ const Posts = () => {
 
   if (loading) return <div>Loading...</div>;
 
-  return (
-    <div>
-      {posts.length > 0 ? (
-        posts.map((post) => (
-          <Link to={`/post/${post._id}`} key={post._id}>
-            <h3>{post.title}</h3>
-            <p>{post.content}</p>
-            <div>
-              <p>By {post.author.name}</p>
-              <p>
-                Created on{" "}
-                {new Date(post.created_at).toLocaleDateString("en-GB")}
-              </p>
-              <p>Status: {post.published ? "Published" : "Not Published"}</p>
-            </div>
-          </Link>
-        ))
-      ) : (
-        <p>No Posts Found</p>
-      )}
-    </div>
-  );
+  return <Post posts={posts} />;
 };
 
 export default Posts;

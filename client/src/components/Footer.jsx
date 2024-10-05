@@ -13,7 +13,7 @@ const Footer = () => {
 };
 
 const FooterDiv = styled.div`
-  font-size: 2.2rem;
+  font-size: var(--16px);
   width: 100%;
   display: flex;
   justify-content: center;
