@@ -51,7 +51,7 @@ const Header = () => {
 
 const HeaderContainer = styled.header`
   width: 100%;
-  border-bottom: 1px #e2e8f0 solid;
+  border-bottom: 1px ${({ theme }) => theme.colors.grey} solid;
   display: flex;
   justify-content: space-between;
   padding: var(--24px);
@@ -61,7 +61,7 @@ const HeaderContainer = styled.header`
     font-size: var(--16px);
     padding: 1rem;
     border-radius: 0.8rem;
-    background-color: blue;
+    background-image: linear-gradient(to right, #4299e1, #3182ce, #2b6cb0);
     color: white;
     font-weight: 600;
   }
@@ -87,7 +87,7 @@ const Logo = styled.p`
   font-weight: 600;
 
   span {
-    color: blue;
+    color: #4299e1;
   }
 `;
 

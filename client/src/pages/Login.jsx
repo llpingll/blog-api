@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { useAuth } from "../components/provider/AuthProvider";
 import Input from "../components/Input";
+import Button from "../components/Button";
+import styled from "styled-components";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -73,29 +75,79 @@ const Login = () => {
 
   // Create form with inputs
   return (
-    <form onSubmit={handleSubmit}>
-      {errors && (
-        <div>
-          {errors.map((err, index) => (
-            <p key={index}>{err.msg}</p>
-          ))}
-        </div>
-      )}
-      <Input
-        name={"email"}
-        value={email}
-        handleChange={handleChange}
-        type={"email"}
-      />
-      <Input
-        name="password"
-        value={password}
-        onChange={handleChange}
-        type="text"
-      />
-      <button type="submit">Login</button>
-    </form>
+    <LoginContainer>
+      <div>
+        <h2>Welcome Back!</h2>
+        <p>Please sign in to access your account</p>
+      </div>
+      <Form onSubmit={handleSubmit}>
+        {errors && (
+          <div>
+            {errors.map((err, index) => (
+              <p key={index}>{err.msg}</p>
+            ))}
+          </div>
+        )}
+        <Input
+          name={"email"}
+          value={email}
+          handleChange={handleChange}
+          type={"email"}
+        />
+        <Input
+          name={"password"}
+          value={password}
+          handleChange={handleChange}
+          type={"text"}
+        />
+        <Button type="submit" value={"Log In"} />
+        <p className="signup-link">
+          Not a member?{" "}
+          <Link to={"/signup"}>
+            <span>Sign up here.</span>
+          </Link>
+        </p>
+      </Form>
+    </LoginContainer>
   );
 };
+
+const LoginContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  text-align: center;
+  width: fit-content;
+  gap: var(--24px);
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+`;
+
+const Form = styled.form`
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  display: flex;
+  flex-direction: column;
+  padding: var(--32px);
+  gap: var(--24px);
+  background-color: white;
+  border-radius: var(--16px);
+
+  button {
+    align-self: center;
+  }
+
+  .signup-link {
+    padding: var(--24px) 0 0 0;
+
+    span {
+      color: #4299e1;
+    }
+  }
+`;
 
 export default Login;

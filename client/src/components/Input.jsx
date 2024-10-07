@@ -1,10 +1,51 @@
+import styled from "styled-components";
+
 // eslint-disable-next-line react/prop-types
 const Input = ({ name, value, handleChange, type }) => {
   return (
-    <label>
-      <input name={name} value={value} onChange={handleChange} type={type} />
-    </label>
+    <Label>
+      <Legend className={value ? "filled" : ""}>{name}</Legend>
+      <TxtInput
+        name={name}
+        value={value}
+        onChange={handleChange}
+        type={type}
+        required
+      />
+    </Label>
   );
 };
+
+const Label = styled.label`
+  position: relative;
+`;
+
+const Legend = styled.legend`
+  position: absolute;
+  top: 20%;
+  left: var(--16px);
+  transition: 0.2s ease all;
+  color: #a7a7a7;
+
+  &.filled,
+  ${Label}:focus-within & {
+    top: -0.7rem;
+    font-size: 0.9rem;
+    color: #4299e1;
+    background-color: white;
+    padding: 0 0.4rem;
+  }
+`;
+
+const TxtInput = styled.input`
+  height: 2.5rem;
+  border-radius: 1rem;
+  border: 2px solid ${({ theme }) => theme.colors.grey};
+  padding: 0 var(--16px);
+
+  &:focus {
+    border: 2px solid #4299e1;
+  }
+`;
 
 export default Input;

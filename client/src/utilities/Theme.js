@@ -1,14 +1,8 @@
 const Theme = {
   colors: {
-    grey: "#979797",
+    grey: "#e2e8f0",
     text: "#FFFFFF",
     background: "#f7fafc",
-    textHover: "#EFEEEE",
-    textActive: "#C0C0C0",
-    dark: "#181818",
-    green: "#b5ffb5",
-    red: "#ffb5b5",
-    purple: "#8B60F7",
   },
 };
 

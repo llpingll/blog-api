@@ -18,6 +18,9 @@ const CommonLayout = () => {
 const Main = styled.main`
   padding: var(--24px);
   flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export default CommonLayout;

@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import { Link, useLocation } from "react-router-dom";
 
-// eslint-disable-next-line react/prop-types
 const Post = ({ posts }) => {
   const isAdminRoute = useLocation().pathname.includes("admin");
 
