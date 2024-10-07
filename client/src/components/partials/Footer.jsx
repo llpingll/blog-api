@@ -12,15 +12,15 @@ const Footer = () => {
   );
 };
 
-const FooterDiv = styled.div`
+const FooterDiv = styled.footer`
   font-size: var(--16px);
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  /* position: absolute;
   left: 0;
-  bottom: 0;
+  bottom: 0; */
   padding: 0.5rem;
 `;
 

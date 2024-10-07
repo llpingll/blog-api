@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../components/provider/AuthProvider";
+import Input from "../components/Input";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -80,22 +81,18 @@ const Login = () => {
           ))}
         </div>
       )}
-      <label>
-        <input
-          name="email"
-          value={email}
-          onChange={handleChange}
-          type="email"
-        />
-      </label>
-      <label>
-        <input
-          name="password"
-          value={password}
-          onChange={handleChange}
-          type="text"
-        />
-      </label>
+      <Input
+        name={"email"}
+        value={email}
+        handleChange={handleChange}
+        type={"email"}
+      />
+      <Input
+        name="password"
+        value={password}
+        onChange={handleChange}
+        type="text"
+      />
       <button type="submit">Login</button>
     </form>
   );

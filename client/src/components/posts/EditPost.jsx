@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "./provider/AuthProvider";
+import { useAuth } from "../provider/AuthProvider";
 import { useParams } from "react-router-dom";
 
 const EditPost = () => {

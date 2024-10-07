@@ -20,15 +20,24 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     line-height: 1.6;
-    min-height: 100%;
-    /* Footer & Cart support */
-    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
   }
 
   body {
     font-family: "Noto Sans", sans-serif;
     font-size: var(--16px);
-    /* background-color: ${({ theme }) => theme.colors.dark}; */
+    background-color: ${({ theme }) => theme.colors.background};
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #root {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
   }
 
   h1,

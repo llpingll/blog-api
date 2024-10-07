@@ -1,4 +1,4 @@
-import { useAuth } from "./provider/AuthProvider";
+import { useAuth } from "../provider/AuthProvider";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
@@ -49,12 +49,13 @@ const Header = () => {
   );
 };
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.header`
   width: 100%;
-  border-bottom: 1px grey solid;
+  border-bottom: 1px #e2e8f0 solid;
   display: flex;
   justify-content: space-between;
   padding: var(--24px);
+  background: white;
 
   button {
     font-size: var(--16px);

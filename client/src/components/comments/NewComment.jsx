@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useParams } from "react-router-dom";
-import { useAuth } from "./provider/AuthProvider";
+import { useAuth } from "../provider/AuthProvider";
 
 // eslint-disable-next-line react/prop-types
 const NewComment = ({ comments, setComments, setShowAddComment }) => {

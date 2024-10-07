@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/partials/Header";
+import Footer from "../components/partials/Footer";
 import styled from "styled-components";
 
 const CommonLayout = () => {
@@ -17,6 +17,7 @@ const CommonLayout = () => {
 
 const Main = styled.main`
   padding: var(--24px);
+  flex-grow: 1;
 `;
 
 export default CommonLayout;

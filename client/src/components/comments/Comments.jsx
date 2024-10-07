@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth } from "./provider/AuthProvider";
+import { useAuth } from "../provider/AuthProvider";
 import NewComment from "./NewComment";
 
 // eslint-disable-next-line react/prop-types

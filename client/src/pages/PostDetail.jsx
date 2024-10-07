@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../components/provider/AuthProvider";
 import { useParams, Link } from "react-router-dom";
-import Comments from "../components/Comments";
+import Comments from "../components/comments/Comments";
 
 const PostDetail = () => {
   const [post, setPost] = useState(null);
