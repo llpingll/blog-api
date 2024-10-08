@@ -42,6 +42,7 @@ const TxtInput = styled.input`
   border-radius: 1rem;
   border: 2px solid ${({ theme }) => theme.colors.grey};
   padding: 0 var(--16px);
+  width: 100%;
 
   &:focus {
     border: 2px solid #4299e1;

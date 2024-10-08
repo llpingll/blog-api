@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import UserForm from "../components/UserForm";
 
 const Signup = () => {
   const [name, setName] = useState("");
@@ -71,35 +72,17 @@ const Signup = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {errors && (
-        <div>
-          {errors.map((err, index) => (
-            <p key={index}>{err.msg}</p>
-          ))}
-        </div>
-      )}
-      <label>
-        <input name="name" value={name} onChange={handleChange} type="text" />
-      </label>
-      <label>
-        <input
-          name="email"
-          value={email}
-          onChange={handleChange}
-          type="email"
-        />
-      </label>
-      <label>
-        <input
-          name="password"
-          value={password}
-          onChange={handleChange}
-          type="text"
-        />
-      </label>
-      <button type="submit">Signup</button>
-    </form>
+    <UserForm
+      values={[
+        { name: "name", value: name, type: "text" },
+        { name: "email", value: email, type: "email" },
+        { name: "password", value: password, type: "text" },
+      ]}
+      handleSubmit={handleSubmit}
+      handlechange={handleChange}
+      errors={errors}
+      form={"signup"}
+    />
   );
 };
 
