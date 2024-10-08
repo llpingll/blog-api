@@ -29,7 +29,7 @@ const Legend = styled.legend`
 
   &.filled,
   ${Label}:focus-within & {
-    top: -0.7rem;
+    top: -0.8rem;
     font-size: 0.9rem;
     color: #4299e1;
     background-color: white;
@@ -45,6 +45,22 @@ const TxtInput = styled.input`
 
   &:focus {
     border: 2px solid #4299e1;
+    background-color: white;
+  }
+
+  /* Prevent browser autofill styles */
+  &:-webkit-autofill {
+    background-color: white !important;
+    -webkit-box-shadow: 0 0 0 30px white inset !important; /* Reset the background */
+    -webkit-text-fill-color: black !important; /* Ensure the text color is visible */
+  }
+
+  &:-moz-autofill {
+    background-color: white !important;
+  }
+
+  &:-ms-autofill {
+    background-color: white !important;
   }
 `;
 

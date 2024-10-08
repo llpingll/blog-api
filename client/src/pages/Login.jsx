@@ -60,7 +60,7 @@ const Login = () => {
     } catch (error) {
       if (error.errors) {
         // Server returned error
-        setErrors(error);
+        setErrors(error.errors);
       } else if (error instanceof TypeError) {
         // Network error
         setErrors([{ msg: "Network or server down, please check connection" }]);
@@ -76,13 +76,13 @@ const Login = () => {
   // Create form with inputs
   return (
     <LoginContainer>
-      <div>
+      <div className="heading">
         <h2>Welcome Back!</h2>
         <p>Please sign in to access your account</p>
       </div>
       <Form onSubmit={handleSubmit}>
         {errors && (
-          <div>
+          <div className="errors">
             {errors.map((err, index) => (
               <p key={index}>{err.msg}</p>
             ))}
@@ -120,10 +120,18 @@ const LoginContainer = styled.div`
   width: fit-content;
   gap: var(--24px);
 
-  > div {
+  .heading {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+
+    & h2 {
+      font-size: var(--40px);
+    }
+
+    & p {
+      font-size: 1.15rem;
+    }
   }
 `;
 
@@ -136,6 +144,10 @@ const Form = styled.form`
   gap: var(--24px);
   background-color: white;
   border-radius: var(--16px);
+
+  .errors p {
+    color: red;
+  }
 
   button {
     align-self: center;
