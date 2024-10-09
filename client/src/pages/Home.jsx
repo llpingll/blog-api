@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Post from "../components/posts/Post";
+import Intro from "../components/Intro";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
@@ -60,7 +61,12 @@ const Home = () => {
 
   if (loading) return <div>Loading...</div>;
 
-  return <Post posts={posts} />;
+  return (
+    <>
+      <Intro />
+      <Post posts={posts} />;
+    </>
+  );
 };
 
 export default Home;

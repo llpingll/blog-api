@@ -41,7 +41,14 @@ const Header = () => {
           </UserInfo>
           <hr />
           <div className="logout">
-            <button onClick={() => setToken(null)}>Logout</button>
+            <button
+              onClick={() => {
+                setShowAccount(!showAccount);
+                setToken(null);
+              }}
+            >
+              Logout
+            </button>
           </div>
         </AccountDetails>
       )}
@@ -54,7 +61,7 @@ const HeaderContainer = styled.header`
   border-bottom: 1px ${({ theme }) => theme.colors.grey} solid;
   display: flex;
   justify-content: space-between;
-  padding: var(--24px);
+  padding: var(--16px);
   background: white;
 
   button {
@@ -68,7 +75,8 @@ const HeaderContainer = styled.header`
 
   .account-button {
     background-color: white;
-    border: 2px solid blue;
+    background-image: none;
+    border: #4299e1 solid 2px;
     display: flex;
     align-items: center;
     gap: 0.3rem;
@@ -98,12 +106,12 @@ const AccountDetails = styled.div`
   position: absolute;
   top: 8rem;
   right: 1.5rem;
-  border: 2px grey solid;
+  border: 2px ${({ theme }) => theme.colors.grey} solid;
   padding: 1.2rem;
   border-radius: var(--24px);
   z-index: 2;
   background-color: white;
-  color: ${({ theme }) => theme.colors.grey};
+  color: #a7a7a7;
 
   .logout {
     text-align: center;

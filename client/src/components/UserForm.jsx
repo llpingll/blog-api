@@ -68,6 +68,8 @@ const LoginContainer = styled.div`
   text-align: center;
   width: fit-content;
   gap: var(--24px);
+  flex-grow: 1;
+  justify-content: center;
 
   .heading {
     display: flex;

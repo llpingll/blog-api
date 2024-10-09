@@ -65,7 +65,7 @@ exports.createUser = [
       try {
         user.password = hashedPassword;
         await user.save();
-        res.status(200);
+        res.status(200).json();
       } catch (error) {
         console.error("Failed to save user:", error);
         res.status(500).json({ errors: [{ msg: "Failed to save user" }] });

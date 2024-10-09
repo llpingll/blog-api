@@ -7,7 +7,7 @@ import NewPost from "./posts/NewPost";
 import EditPost from "./posts/EditPost";
 import PostDetail from "../pages/PostDetail";
 import ErrorPage from "../pages/ErrorPage";
-import AdminLayout from "./AdminProtectedRoute";
+import AdminProtectedRoute from "./AdminProtectedRoute";
 import AuthProvider from "./provider/AuthProvider";
 import CommonLayout from "../pages/CommonLayout";
 
@@ -26,7 +26,7 @@ const Router = () => {
     },
     {
       path: "/admin",
-      element: <AdminLayout />,
+      element: <AdminProtectedRoute />,
       children: [
         { index: true, element: <Posts /> },
         { path: "new", element: <NewPost /> },
