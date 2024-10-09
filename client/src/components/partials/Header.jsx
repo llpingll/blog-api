@@ -12,46 +12,48 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <Nav>
-        <Link to={"/"}>
-          <Logo>
-            <span>Blog</span> API
-          </Logo>
-        </Link>
-        {user && user.type === "admin" && (
-          <button onClick={() => navigate("/admin")}>Admin</button>
+      <div className="limiter">
+        <Nav>
+          <Link to={"/"}>
+            <Logo>
+              <span>Blog</span> API
+            </Logo>
+          </Link>
+          {user && user.type === "admin" && (
+            <button onClick={() => navigate("/admin")}>Admin</button>
+          )}
+        </Nav>
+        {!user ? (
+          <button onClick={() => navigate("/login")}>Log In</button>
+        ) : (
+          <button
+            className="account-button"
+            onClick={() => setShowAccount(!showAccount)}
+          >
+            Account{showAccount ? <IoIosArrowUp /> : <IoIosArrowDown />}
+          </button>
         )}
-      </Nav>
-      {!user ? (
-        <button onClick={() => navigate("/login")}>Log In</button>
-      ) : (
-        <button
-          className="account-button"
-          onClick={() => setShowAccount(!showAccount)}
-        >
-          Account{showAccount ? <IoIosArrowUp /> : <IoIosArrowDown />}
-        </button>
-      )}
-      {showAccount && (
-        <AccountDetails>
-          <UserInfo>
-            <p>Signed in as</p>
-            <p className="user">{user.name}</p>
-            <p>{user.email}</p>
-          </UserInfo>
-          <hr />
-          <div className="logout">
-            <button
-              onClick={() => {
-                setShowAccount(!showAccount);
-                setToken(null);
-              }}
-            >
-              Logout
-            </button>
-          </div>
-        </AccountDetails>
-      )}
+        {showAccount && (
+          <AccountDetails>
+            <UserInfo>
+              <p>Signed in as</p>
+              <p className="user">{user.name}</p>
+              <p>{user.email}</p>
+            </UserInfo>
+            <hr />
+            <div className="logout">
+              <button
+                onClick={() => {
+                  setShowAccount(!showAccount);
+                  setToken(null);
+                }}
+              >
+                Logout
+              </button>
+            </div>
+          </AccountDetails>
+        )}
+      </div>
     </HeaderContainer>
   );
 };
@@ -59,10 +61,25 @@ const Header = () => {
 const HeaderContainer = styled.header`
   width: 100%;
   border-bottom: 1px ${({ theme }) => theme.colors.grey} solid;
-  display: flex;
-  justify-content: space-between;
-  padding: var(--16px);
   background: white;
+  display: flex;
+  flex-direction: column;
+
+  .limiter {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--16px);
+    width: 100%;
+    max-width: 1800px;
+    align-self: center;
+    position: relative; // account-button support
+
+    @media (max-width: 450px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+  }
 
   button {
     font-size: var(--16px);
@@ -82,12 +99,17 @@ const HeaderContainer = styled.header`
     gap: 0.3rem;
     color: black;
     font-weight: 500;
+    max-width: fit-content;
   }
 `;
 
 const Nav = styled.nav`
   display: flex;
   gap: var(--24px);
+  @media (max-width: 450px) {
+    justify-content: space-between;
+    width: 100%;
+  }
 `;
 
 const Logo = styled.p`
@@ -104,7 +126,7 @@ const AccountDetails = styled.div`
   flex-direction: column;
   gap: 1rem;
   position: absolute;
-  top: 8rem;
+  top: 6rem;
   right: 1.5rem;
   border: 2px ${({ theme }) => theme.colors.grey} solid;
   padding: 1.2rem;
@@ -112,6 +134,10 @@ const AccountDetails = styled.div`
   z-index: 2;
   background-color: white;
   color: #a7a7a7;
+
+  @media (max-width: 450px) {
+    top: 11rem;
+  }
 
   .logout {
     text-align: center;

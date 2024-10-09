@@ -30,9 +30,19 @@ const IntroContainer = styled.div`
   display: flex;
   /* max-height: 30rem; */
   padding: var(--24px);
-  gap: 1rem;
+  gap: 2rem;
   font-size: 1.15rem;
   max-height: 31rem;
+
+  @media (max-width: 1100px) {
+    font-size: 99.9999%;
+  }
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+    max-height: 100%;
+    align-items: center;
+  }
 
   > div {
     background: white;
@@ -40,7 +50,7 @@ const IntroContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     border-radius: 2rem;
-    padding: 0 var(--32px);
+    padding: var(--32px);
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
       rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
   }
@@ -72,6 +82,11 @@ const IntroContainer = styled.div`
     max-width: 40%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
       rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
+    @media (max-width: 750px) {
+      min-width: 100%;
+      max-height: 25rem;
+    }
   }
 `;
 
