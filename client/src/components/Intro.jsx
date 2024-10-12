@@ -76,8 +76,6 @@ const IntroContainer = styled.div`
 
   img {
     object-fit: cover;
-    width: auto;
-    height: auto;
     border-radius: 2rem;
     max-width: 40%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
