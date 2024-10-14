@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
+import PostForm from "./PostForm";
 
 const NewPost = () => {
   const [title, setTitle] = useState("");
@@ -13,7 +14,7 @@ const NewPost = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, checked } = e.target;
 
     switch (name) {
       case "title":
@@ -26,7 +27,7 @@ const NewPost = () => {
         setImageURL(value);
         break;
       case "published":
-        setPublished(value);
+        setPublished(checked);
         break;
     }
   };
@@ -77,47 +78,20 @@ const NewPost = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {errors && (
-        <div>
-          {errors.map((err, index) => (
-            <p key={index}>{err.msg}</p>
-          ))}
-        </div>
-      )}
-      <label>
-        name
-        <input name="title" value={title} onChange={handleChange} type="text" />
-      </label>
-      <label>
-        content
-        <textarea
-          name="content"
-          value={content}
-          onChange={handleChange}
-          type="textarea"
-        />
-      </label>
-      <label>
-        imageURL
-        <input
-          name="imageURL"
-          value={imageURL}
-          onChange={handleChange}
-          type="url"
-        />
-      </label>
-      <label>
-        Published
-        <input
-          name="published"
-          value={published}
-          onChange={handleChange}
-          type="checkbox"
-        />
-      </label>
-      <button type="submit">Post</button>
-    </form>
+    <>
+      <PostForm
+        values={[
+          { name: "title", value: title, type: "text" },
+          { name: "content", value: content, type: "textarea" },
+          { name: "imageURL", value: imageURL, type: "url" },
+          { name: "published", value: published, type: "checkbox" },
+        ]}
+        handleSubmit={handleSubmit}
+        handlechange={handleChange}
+        errors={errors}
+        form={"new"}
+      />
+    </>
   );
 };
 

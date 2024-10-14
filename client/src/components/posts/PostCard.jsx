@@ -35,13 +35,15 @@ const CardContainer = styled(Link)`
   background: white;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-  max-height: fit-content;
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
 
   img {
     object-fit: cover;
     border-radius: 2rem 2rem 0 0;
-    max-height: 42%;
     aspect-ratio: 16/9;
+    max-height: 48%;
   }
 
   .info {

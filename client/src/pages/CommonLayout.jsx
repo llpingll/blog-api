@@ -20,7 +20,7 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   max-width: 1600px;
-  margin: 0 auto;
+  align-items: center;
 `;
 
 export default CommonLayout;

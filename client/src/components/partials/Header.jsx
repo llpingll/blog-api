@@ -20,7 +20,10 @@ const Header = () => {
             </Logo>
           </Link>
           {user && user.type === "admin" && (
-            <button onClick={() => navigate("/admin")}>Admin</button>
+            <>
+              <button onClick={() => navigate("/admin")}>Admin</button>
+              <button onClick={() => navigate("/admin/new")}>Add Post</button>
+            </>
           )}
         </Nav>
         {!user ? (
@@ -74,7 +77,7 @@ const HeaderContainer = styled.header`
     align-self: center;
     position: relative; // account-button support
 
-    @media (max-width: 450px) {
+    @media (max-width: 535px) {
       flex-direction: column;
       align-items: center;
       gap: 2rem;
@@ -105,9 +108,10 @@ const HeaderContainer = styled.header`
 
 const Nav = styled.nav`
   display: flex;
+  flex-wrap: wrap;
   gap: var(--24px);
   @media (max-width: 450px) {
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
   }
 `;

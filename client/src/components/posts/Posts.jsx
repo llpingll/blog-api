@@ -39,7 +39,7 @@ const PostsContainer = styled.div`
     grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
   }
 
-  @media (max-width: 1075px) {
+  @media (max-width: 1090px) {
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   }
 `;

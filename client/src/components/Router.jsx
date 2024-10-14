@@ -26,7 +26,7 @@ const Router = () => {
     },
     {
       path: "/admin",
-      element: <AdminProtectedRoute />,
+      element: <AdminProtectedRoute />, // Renders CommonLayout if authenticated
       children: [
         { index: true, element: <Posts /> },
         { path: "new", element: <NewPost /> },
