@@ -55,6 +55,7 @@ const FormContainer = styled.div`
   flex-grow: 1;
   justify-content: center;
   padding: var(--24px) 0;
+  align-self: center;
 
   .heading {
     display: flex;

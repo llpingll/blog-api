@@ -19,8 +19,8 @@ const Main = styled.main`
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  max-width: 1600px;
-  align-items: center;
+  /* max-width: 1600px; */
+  /* align-self: center; */
 `;
 
 export default CommonLayout;

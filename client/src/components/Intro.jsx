@@ -32,12 +32,14 @@ const IntroContainer = styled.div`
   gap: 2rem;
   font-size: 1.15rem;
   max-height: 31rem;
+  max-width: 1600px;
   background: white;
   /* justify-content: center; */
   border-radius: 2rem;
   padding: var(--32px);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  align-self: center;
 
   @media (max-width: 1100px) {
     font-size: 99.9999%;

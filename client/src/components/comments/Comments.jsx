@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 import NewComment from "./NewComment";
+import styled from "styled-components";
+import Button from "../Button";
 
 // eslint-disable-next-line react/prop-types
 const Comments = ({ showAddComment, setShowAddComment }) => {
@@ -11,14 +13,6 @@ const Comments = ({ showAddComment, setShowAddComment }) => {
 
   const { id } = useParams();
   const { user } = useAuth();
-
-  const handleAddComment = () => {
-    if (user) {
-      setShowAddComment(true);
-    } else {
-      return;
-    }
-  };
 
   useEffect(() => {
     const apiBaseUrl =
@@ -75,23 +69,39 @@ const Comments = ({ showAddComment, setShowAddComment }) => {
   if (loading) return <div>Loading...</div>;
 
   return (
-    <>
+    <CommentsContainer>
       <div>
-        <button onClick={handleAddComment}>
-          {user ? "Add comment" : "Login to comment"}
-        </button>
-        {comments.length > 0 ? (
-          comments.map((comment) => (
-            <div key={comment._id}>
-              <p>{comment.user.name}</p>
-              <p>{new Date(comment.timestamp).toLocaleDateString("en-GB")}</p>
-              <p>{comment.content}</p>
-            </div>
-          ))
+        {user ? (
+          <Button value={"Add Comment"} />
         ) : (
-          <div>No Comments</div>
+          <p className="links">
+            <Link className="link" to={"/login"}>
+              Login
+            </Link>{" "}
+            or{" "}
+            <Link className="link" to={"/signup"}>
+              create an account
+            </Link>{" "}
+            to join the conversation.
+          </p>
         )}
       </div>
+      {comments.length > 0 ? (
+        <>
+          <h2>{`Comments (${comments.length})`}</h2>
+          {comments.map((comment) => (
+            <div className="comment" key={comment._id}>
+              <p className="user">{comment.user.name}</p>
+              <p className="date">
+                {new Date(comment.timestamp).toLocaleDateString("en-GB")}
+              </p>
+              <p>{comment.content}</p>
+            </div>
+          ))}
+        </>
+      ) : (
+        <h3 className="no-comments">No Comments</h3>
+      )}
       {showAddComment && (
         <NewComment
           comments={comments}
@@ -99,8 +109,55 @@ const Comments = ({ showAddComment, setShowAddComment }) => {
           setShowAddComment={setShowAddComment}
         />
       )}
-    </>
+    </CommentsContainer>
   );
 };
+
+const CommentsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  > div:first-of-type {
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 0;
+    border-top: #dbdbdb 1px solid;
+    border-bottom: #dbdbdb 1px solid;
+  }
+
+  .links {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .link {
+    color: #4299e1;
+  }
+
+  .comment {
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+      rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    /* background-color: white; */
+    border: 1px solid #dbdbdb;
+    border-radius: 1rem;
+    padding: 1rem;
+    font-size: 1rem;
+
+    .user {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .date {
+      color: #a7a7a7;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .no-comments {
+    text-align: center;
+  }
+`;
 
 export default Comments;

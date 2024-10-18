@@ -1,5 +1,5 @@
 import { useAuth } from "../provider/AuthProvider";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
@@ -9,6 +9,7 @@ const Header = () => {
 
   const { user, setToken } = useAuth();
   const navigate = useNavigate();
+  const isAdminRoute = useLocation().pathname.includes("admin");
 
   return (
     <HeaderContainer>
@@ -20,21 +21,23 @@ const Header = () => {
             </Logo>
           </Link>
           {user && user.type === "admin" && (
-            <>
-              <button onClick={() => navigate("/admin")}>Admin</button>
-              <button onClick={() => navigate("/admin/new")}>Add Post</button>
-            </>
+            <button onClick={() => navigate("/admin")}>Admin</button>
           )}
         </Nav>
         {!user ? (
           <button onClick={() => navigate("/login")}>Log In</button>
         ) : (
-          <button
-            className="account-button"
-            onClick={() => setShowAccount(!showAccount)}
-          >
-            Account{showAccount ? <IoIosArrowUp /> : <IoIosArrowDown />}
-          </button>
+          <div className="header-right">
+            {isAdminRoute && (
+              <button onClick={() => navigate("/admin/new")}>Add Post</button>
+            )}
+            <button
+              className="account-button"
+              onClick={() => setShowAccount(!showAccount)}
+            >
+              Account{showAccount ? <IoIosArrowUp /> : <IoIosArrowDown />}
+            </button>
+          </div>
         )}
         {showAccount && (
           <AccountDetails>
@@ -82,6 +85,11 @@ const HeaderContainer = styled.header`
       align-items: center;
       gap: 2rem;
     }
+
+    .header-right {
+      display: flex;
+      gap: 1rem;
+    }
   }
 
   button {
@@ -110,6 +118,7 @@ const Nav = styled.nav`
   display: flex;
   flex-wrap: wrap;
   gap: var(--24px);
+
   @media (max-width: 450px) {
     justify-content: center;
     width: 100%;
@@ -139,7 +148,7 @@ const AccountDetails = styled.div`
   background-color: white;
   color: #a7a7a7;
 
-  @media (max-width: 450px) {
+  @media (max-width: 535px) {
     top: 11rem;
   }
 
