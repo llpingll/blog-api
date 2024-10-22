@@ -1,65 +1,20 @@
-import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 import NewComment from "./NewComment";
 import styled from "styled-components";
 import Button from "../Button";
 
-// eslint-disable-next-line react/prop-types
-const Comments = ({ showAddComment, setShowAddComment }) => {
-  const [comments, setComments] = useState([]);
-  const [errors, setErrors] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const { id } = useParams();
+const Comments = ({ comments, setComments, commentErrors, loading }) => {
+  const [showAddComment, setShowAddComment] = useState(false);
   const { user } = useAuth();
+  const location = useLocation();
 
-  useEffect(() => {
-    const apiBaseUrl =
-      import.meta.env.VITE_SERVER_URL || "http://localhost:3000/api";
-
-    const getComments = async () => {
-      try {
-        const response = await fetch(`${apiBaseUrl}/post/${id}/comments`, {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-        });
-
-        // Check response
-        if (!response.ok) {
-          const err = await response.json();
-          throw err;
-        }
-
-        const data = await response.json();
-        setComments(data);
-      } catch (error) {
-        if (error.errors) {
-          // Server returned error
-          setErrors(error.errors);
-        } else if (error instanceof TypeError) {
-          // Network error
-          setErrors([
-            { msg: "Network or server down, please check connection" },
-          ]);
-        } else {
-          // Unexpected error (All other errors)
-          setErrors([
-            { msg: "An unexpected error occurred. Please try again later." },
-          ]);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    getComments();
-  }, [id]);
-
-  if (errors) {
+  if (commentErrors) {
     return (
       <div>
-        {errors.map((err, index) => (
+        {commentErrors.map((err, index) => (
           <p key={index}>{err.msg}</p>
         ))}
       </div>
@@ -71,11 +26,25 @@ const Comments = ({ showAddComment, setShowAddComment }) => {
   return (
     <CommentsContainer>
       <div>
-        {user ? (
-          <Button value={"Add Comment"} />
+        {user && showAddComment ? (
+          <NewComment
+            comments={comments}
+            setComments={setComments}
+            setShowAddComment={setShowAddComment}
+          />
+        ) : user ? (
+          <Button
+            value={"Add Comment"}
+            type={"button"}
+            action={() => setShowAddComment(true)}
+          />
         ) : (
           <p className="links">
-            <Link className="link" to={"/login"}>
+            <Link
+              className="link"
+              to={"/login"}
+              state={{ path: location.pathname }}
+            >
               Login
             </Link>{" "}
             or{" "}
@@ -101,13 +70,6 @@ const Comments = ({ showAddComment, setShowAddComment }) => {
         </>
       ) : (
         <h3 className="no-comments">No Comments</h3>
-      )}
-      {showAddComment && (
-        <NewComment
-          comments={comments}
-          setComments={setComments}
-          setShowAddComment={setShowAddComment}
-        />
       )}
     </CommentsContainer>
   );

@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
 // eslint-disable-next-line react/prop-types
-const Button = ({ value, type }) => {
-  return <ButtonGeneric type={type}>{value}</ButtonGeneric>;
+const Button = ({ value, type, action }) => {
+  return (
+    <ButtonGeneric onClick={action || null} type={type}>
+      {value}
+    </ButtonGeneric>
+  );
 };
 
 const ButtonGeneric = styled.button`

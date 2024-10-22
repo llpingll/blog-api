@@ -3,12 +3,14 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import styled from "styled-components";
+import Button from "../Button";
 
 const Header = () => {
   const [showAccount, setShowAccount] = useState(false);
 
   const { user, setToken } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const isAdminRoute = useLocation().pathname.includes("admin");
 
   return (
@@ -21,15 +23,20 @@ const Header = () => {
             </Logo>
           </Link>
           {user && user.type === "admin" && (
-            <button onClick={() => navigate("/admin")}>Admin</button>
+            <Button value={"Admin"} action={() => navigate("/admin")} />
           )}
         </Nav>
         {!user ? (
-          <button onClick={() => navigate("/login")}>Log In</button>
+          <Link to={"login"} state={{ path: location.pathname }}>
+            <Button value={"Log In"} />
+          </Link>
         ) : (
           <div className="header-right">
             {isAdminRoute && (
-              <button onClick={() => navigate("/admin/new")}>Add Post</button>
+              <Button
+                value={"Add Post"}
+                action={() => navigate("/admin/new")}
+              />
             )}
             <button
               className="account-button"
@@ -48,14 +55,13 @@ const Header = () => {
             </UserInfo>
             <hr />
             <div className="logout">
-              <button
-                onClick={() => {
+              <Button
+                value={"Logout"}
+                action={() => {
                   setShowAccount(!showAccount);
                   setToken(null);
                 }}
-              >
-                Logout
-              </button>
+              />
             </div>
           </AccountDetails>
         )}
@@ -92,16 +98,9 @@ const HeaderContainer = styled.header`
     }
   }
 
-  button {
-    font-size: var(--16px);
+  .account-button {
     padding: 1rem;
     border-radius: 0.8rem;
-    background-image: linear-gradient(to right, #4299e1, #3182ce, #2b6cb0);
-    color: white;
-    font-weight: 600;
-  }
-
-  .account-button {
     background-color: white;
     background-image: none;
     border: #4299e1 solid 2px;
