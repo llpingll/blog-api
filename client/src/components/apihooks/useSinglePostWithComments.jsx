@@ -30,7 +30,6 @@ const useSinglePostWithComments = () => {
         }
 
         const data = await response.json();
-        console.log("post set");
         setPost(data);
       } catch (error) {
         if (error instanceof TypeError) {
@@ -61,7 +60,6 @@ const useSinglePostWithComments = () => {
         }
 
         const data = await response.json();
-        console.log("comments set");
         setComments(data);
       } catch (error) {
         if (error instanceof TypeError) {

@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 const PostCard = ({ post }) => {
   const isAdminRoute = useLocation().pathname.includes("admin");
-  console.log(post.image_url);
 
   return (
     <CardContainer to={`/post/${post._id}`}>

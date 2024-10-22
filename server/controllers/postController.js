@@ -15,7 +15,11 @@ exports.createPost = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body("image_url").optional({ checkFalsy: true }).trim().escape(),
+  body("image_url")
+    .optional({ checkFalsy: true })
+    .trim()
+    .isURL()
+    .withMessage("Image URL must be a valid URL."),
   body("published", "Published must not be empty.")
     .trim()
     .isLength({ min: 1 })
@@ -96,7 +100,11 @@ exports.updatePost = [
     .trim()
     .isLength({ min: 1 })
     .escape(),
-  body("image_url").optional({ checkFalsy: true }).trim().escape(),
+  body("image_url")
+    .optional({ checkFalsy: true })
+    .trim()
+    .isURL()
+    .withMessage("Image URL must be a valid URL."),
   body("published", "Published must not be empty.")
     .trim()
     .isLength({ min: 1 })

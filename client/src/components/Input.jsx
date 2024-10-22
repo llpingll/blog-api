@@ -30,7 +30,7 @@ const Input = ({ name, value, handleChange, type }) => {
               value={value}
               onChange={handleChange}
               type={type}
-              required
+              required={type !== "url"}
             />
           )}
         </>

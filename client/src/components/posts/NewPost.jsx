@@ -6,7 +6,7 @@ import PostForm from "./PostForm";
 const NewPost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [imageURL, setImageURL] = useState("");
+  const [image_url, setImageURL] = useState("");
   const [published, setPublished] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -23,7 +23,7 @@ const NewPost = () => {
       case "content":
         setContent(value);
         break;
-      case "imageURL":
+      case "image_url":
         setImageURL(value);
         break;
       case "published":
@@ -38,7 +38,7 @@ const NewPost = () => {
     const formData = {
       title,
       content,
-      imageURL,
+      image_url,
       published,
     };
 
@@ -83,7 +83,7 @@ const NewPost = () => {
         values={[
           { name: "title", value: title, type: "text" },
           { name: "content", value: content, type: "textarea" },
-          { name: "imageURL", value: imageURL, type: "url" },
+          { name: "image_url", value: image_url, type: "url" },
           { name: "published", value: published, type: "checkbox" },
         ]}
         handleSubmit={handleSubmit}

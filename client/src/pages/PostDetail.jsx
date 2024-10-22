@@ -3,11 +3,11 @@ import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import Comments from "../components/comments/Comments";
 import Button from "../components/Button";
-import usePostDetail from "../components/apihooks/usePostDetail";
+import useSinglePostWithComments from "../components/apihooks/useSinglePostWithComments";
 
 const PostDetail = () => {
   const { post, postErrors, comments, setComments, commentErrors, loading } =
-    usePostDetail();
+    useSinglePostWithComments();
 
   const { user } = useAuth();
   const { id } = useParams();
@@ -46,7 +46,7 @@ const PostDetail = () => {
         )}
       </div>
 
-      <p>{post.content}</p>
+      <p className="content">{post.content}</p>
       {user && user.type === "admin" && (
         <Link className="edit" to={`/admin/edit/${id}`}>
           <Button value={"Edit"} />
@@ -84,6 +84,10 @@ const PostContainer = styled.div`
   > div:first-of-type p {
     color: #a7a7a7;
     font-size: 1.2rem;
+  }
+
+  .content {
+    white-space: pre-line;
   }
 
   .edit {

@@ -2,15 +2,18 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 import { useParams } from "react-router-dom";
+import PostForm from "./PostForm";
+import Error from "../Error";
 
 const EditPost = () => {
   const [post, setPost] = useState({
     title: "",
     content: "",
-    imageURL: "",
+    image_url: "",
     published: false,
   });
-  const [errors, setErrors] = useState(null);
+  const [getErrors, setGetErrors] = useState(null);
+  const [postErrors, setPostErrors] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const { getAuthHeaders } = useAuth();
@@ -38,21 +41,21 @@ const EditPost = () => {
         setPost({
           title: data.title,
           content: data.content,
-          imageURL: data.imageURL,
+          image_url: data.image_url,
           published: data.published,
         });
       } catch (error) {
         if (error.errors) {
           // Server returned error
-          setErrors(error.errors);
+          setGetErrors(error.errors);
         } else if (error instanceof TypeError) {
           // Network error
-          setErrors([
+          setGetErrors([
             { msg: "Network or server down, please check connection" },
           ]);
         } else {
           // Unexpected error (All other errors)
-          setErrors([
+          setGetErrors([
             { msg: "An unexpected error occurred. Please try again later." },
           ]);
         }
@@ -75,14 +78,8 @@ const EditPost = () => {
   };
 
   // Return early if there are errors
-  if (errors) {
-    return (
-      <div>
-        {errors.map((err, index) => (
-          <p key={index}>{err.msg}</p>
-        ))}
-      </div>
-    );
+  if (getErrors) {
+    return <Error errors={getErrors} />;
   }
 
   if (loading) return <div>Loading...</div>;
@@ -112,13 +109,15 @@ const EditPost = () => {
     } catch (error) {
       if (error.errors) {
         // Server returned error
-        setErrors(error.errors);
+        setPostErrors(error.errors);
       } else if (error instanceof TypeError) {
         // Network error
-        setErrors([{ msg: "Network or server down, please check connection" }]);
+        setPostErrors([
+          { msg: "Network or server down, please check connection" },
+        ]);
       } else {
         // Unexpected error (All other errors)
-        setErrors([
+        setPostErrors([
           { msg: "An unexpected error occurred. Please try again later." },
         ]);
       }
@@ -126,52 +125,20 @@ const EditPost = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      {errors && (
-        <div>
-          {errors.map((err, index) => (
-            <p key={index}>{err.msg}</p>
-          ))}
-        </div>
-      )}
-      <label>
-        name
-        <input
-          name="title"
-          value={post.title}
-          onChange={handleChange}
-          type="text"
-        />
-      </label>
-      <label>
-        content
-        <textarea
-          name="content"
-          value={post.content}
-          onChange={handleChange}
-          type="textarea"
-        />
-      </label>
-      <label>
-        imageURL
-        <input
-          name="imageURL"
-          value={post.imageURL}
-          onChange={handleChange}
-          type="url"
-        />
-      </label>
-      <label>
-        Published
-        <input
-          name="published"
-          checked={post.published}
-          onChange={handleChange}
-          type="checkbox"
-        />
-      </label>
-      <button type="submit">Post</button>
-    </form>
+    <>
+      <PostForm
+        values={[
+          { name: "title", value: post.title, type: "text" },
+          { name: "content", value: post.content, type: "textarea" },
+          { name: "image_url", value: post.image_url, type: "url" },
+          { name: "published", value: post.published, type: "checkbox" },
+        ]}
+        handleSubmit={handleSubmit}
+        handlechange={handleChange}
+        errors={postErrors}
+        form={"edit"}
+      />
+    </>
   );
 };
 

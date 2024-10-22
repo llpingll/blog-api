@@ -2,6 +2,9 @@ import { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
+import styled from "styled-components";
+import Button from "../Button";
+import Error from "../Error";
 
 // eslint-disable-next-line react/prop-types
 const NewComment = ({ comments, setComments, setShowAddComment }) => {
@@ -54,29 +57,67 @@ const NewComment = ({ comments, setComments, setShowAddComment }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        {errors && (
-          <div>
-            {errors.map((err, index) => (
-              <p key={index}>{err.msg}</p>
-            ))}
-          </div>
-        )}
-        <IoMdCloseCircle onClick={() => setShowAddComment(false)} />
-        <label>
-          Comment
-          <textarea
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            type="textarea"
-          />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <Form onSubmit={handleSubmit}>
+      {errors && <Error errors={errors} />}
+      <StyledCloseIcon onClick={() => setShowAddComment(false)} />
+      <label htmlFor="comment">New Comment</label>
+      <textarea
+        id="comment"
+        name="content"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        type="textarea"
+      />
+      <div className="button">
+        <Button value={"submit"} type={"sumbit"} />
+      </div>
+    </Form>
   );
 };
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  border: 1px solid #dbdbdb;
+  border-radius: 1rem;
+  padding: 1rem;
+  font-size: 1rem;
+  gap: 1rem;
+  width: 80%;
+  text-align: center;
+
+  label {
+    width: 100%;
+    text-align: center;
+  }
+
+  textarea {
+    border: #dbdbdb 1px solid;
+    border-radius: 0.5rem;
+    height: 4rem;
+    padding: 0.5rem;
+    &:focus {
+      border: #4299e1 1px solid;
+    }
+  }
+
+  .button {
+    display: flex;
+    justify-content: center;
+  }
+`;
+
+const StyledCloseIcon = styled(IoMdCloseCircle)`
+  margin-bottom: -2.5rem;
+  z-index: 2;
+  cursor: pointer;
+  color: #ff0000;
+  font-size: 1.5rem;
+  &:hover {
+    color: #cc0000;
+  }
+`;
 
 export default NewComment;

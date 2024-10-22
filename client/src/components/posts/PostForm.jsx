@@ -2,6 +2,7 @@
 import Input from "../Input";
 import Button from "../Button";
 import styled from "styled-components";
+import Error from "../Error";
 
 const PostForm = ({ values, handlechange, handleSubmit, errors, form }) => {
   return (
@@ -18,13 +19,7 @@ const PostForm = ({ values, handlechange, handleSubmit, errors, form }) => {
         )}
       </div>
       <Form onSubmit={handleSubmit}>
-        {errors && (
-          <div className="errors">
-            {errors.map((err, index) => (
-              <p key={index}>{err.msg}</p>
-            ))}
-          </div>
-        )}
+        {errors && <Error errors={errors} />}
         {values.map((input, index) => {
           return (
             <Input

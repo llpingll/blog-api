@@ -3,6 +3,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Error from "./Error";
 
 const UserForm = ({ values, handlechange, handleSubmit, errors, form }) => {
   // Create form with inputs
@@ -22,13 +23,7 @@ const UserForm = ({ values, handlechange, handleSubmit, errors, form }) => {
         )}
       </div>
       <Form onSubmit={handleSubmit}>
-        {errors && (
-          <div className="errors">
-            {errors.map((err, index) => (
-              <p key={index}>{err.msg}</p>
-            ))}
-          </div>
-        )}
+        {errors && <Error errors={errors} />}
         {values.map((input, index) => {
           return (
             <Input
