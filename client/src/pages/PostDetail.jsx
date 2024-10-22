@@ -4,6 +4,8 @@ import styled from "styled-components";
 import Comments from "../components/comments/Comments";
 import Button from "../components/Button";
 import useSinglePostWithComments from "../components/apihooks/useSinglePostWithComments";
+import Error from "../components/Error";
+import Loader from "../components/Loader";
 
 const PostDetail = () => {
   const { post, postErrors, comments, setComments, commentErrors, loading } =
@@ -14,16 +16,10 @@ const PostDetail = () => {
 
   // Return early if there are errors
   if (postErrors) {
-    return (
-      <div>
-        {postErrors.map((err, index) => (
-          <p key={index}>{err.msg}</p>
-        ))}
-      </div>
-    );
+    return <Error errors={postErrors} />;
   }
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
 
   // If post is null or undefined, return early
   if (!post) return <div>No Post Found</div>;

@@ -4,6 +4,7 @@ import { useAuth } from "../provider/AuthProvider";
 import { useParams } from "react-router-dom";
 import PostForm from "./PostForm";
 import Error from "../Error";
+import Loader from "../Loader";
 
 const EditPost = () => {
   const [post, setPost] = useState({
@@ -82,7 +83,7 @@ const EditPost = () => {
     return <Error errors={getErrors} />;
   }
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
 
   // If post is null or undefined, return early
   if (!post) return <div>Post Not Found</div>;

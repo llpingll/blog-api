@@ -1,22 +1,18 @@
 import styled from "styled-components";
 import usePosts from "../apihooks/usePosts";
 import PostCard from "./PostCard";
+import Error from "../Error";
+import Loader from "../Loader";
 
 const Posts = () => {
   const { posts, errors, loading } = usePosts();
 
   // Return early if there are errors
   if (errors) {
-    return (
-      <div>
-        {errors.map((err, index) => (
-          <p key={index}>{err.msg}</p>
-        ))}
-      </div>
-    );
+    return <Error errors={errors} />;
   }
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
 
   return (
     <PostsContainer>
@@ -40,8 +36,6 @@ const PostsContainer = styled.div`
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
-    /* max-width: 1600px; */
-    /* align-self: center; */
 
     @media (max-width: 1335px) {
       grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
