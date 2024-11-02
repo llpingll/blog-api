@@ -77,10 +77,6 @@ const Form = styled.form`
   background-color: white;
   border-radius: var(--16px);
 
-  .errors p {
-    color: red;
-  }
-
   button {
     align-self: center;
   }

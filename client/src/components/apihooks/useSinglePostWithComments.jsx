@@ -8,6 +8,7 @@ const useSinglePostWithComments = () => {
   const [postErrors, setPostErrors] = useState(null);
   const [commentErrors, setCommentErrors] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [reloadComments, setReloadComments] = useState(false);
 
   const { id } = useParams();
   const { getAuthHeaders } = useAuth();
@@ -84,9 +85,17 @@ const useSinglePostWithComments = () => {
 
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, reloadComments]);
 
-  return { post, comments, setComments, postErrors, commentErrors, loading };
+  return {
+    post,
+    comments,
+    setComments,
+    postErrors,
+    commentErrors,
+    loading,
+    setReloadComments,
+  };
 };
 
 export default useSinglePostWithComments;

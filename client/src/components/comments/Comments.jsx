@@ -5,23 +5,25 @@ import { useAuth } from "../provider/AuthProvider";
 import NewComment from "./NewComment";
 import styled from "styled-components";
 import Button from "../Button";
+import Loader from "../Loader";
+import Error from "../Error";
 
-const Comments = ({ comments, setComments, commentErrors, loading }) => {
+const Comments = ({
+  comments,
+  setComments,
+  commentErrors,
+  loading,
+  setReloadComments,
+}) => {
   const [showAddComment, setShowAddComment] = useState(false);
   const { user } = useAuth();
   const location = useLocation();
 
   if (commentErrors) {
-    return (
-      <div>
-        {commentErrors.map((err, index) => (
-          <p key={index}>{err.msg}</p>
-        ))}
-      </div>
-    );
+    return <Error errors={commentErrors} />;
   }
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loader />;
 
   return (
     <CommentsContainer>
@@ -31,6 +33,7 @@ const Comments = ({ comments, setComments, commentErrors, loading }) => {
             comments={comments}
             setComments={setComments}
             setShowAddComment={setShowAddComment}
+            setReloadComments={setReloadComments}
           />
         ) : user ? (
           <Button

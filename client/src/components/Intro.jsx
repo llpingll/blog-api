@@ -34,7 +34,6 @@ const IntroContainer = styled.div`
   max-height: 31rem;
   max-width: 1600px;
   background: white;
-  /* justify-content: center; */
   border-radius: 2rem;
   padding: var(--32px);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,

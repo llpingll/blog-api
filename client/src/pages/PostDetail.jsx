@@ -8,8 +8,15 @@ import Error from "../components/Error";
 import Loader from "../components/Loader";
 
 const PostDetail = () => {
-  const { post, postErrors, comments, setComments, commentErrors, loading } =
-    useSinglePostWithComments();
+  const {
+    post,
+    postErrors,
+    comments,
+    setComments,
+    commentErrors,
+    loading,
+    setReloadComments,
+  } = useSinglePostWithComments();
 
   const { user } = useAuth();
   const { id } = useParams();
@@ -53,6 +60,7 @@ const PostDetail = () => {
         setComments={setComments}
         commentErrors={commentErrors}
         loading={loading}
+        setReloadComments={setReloadComments}
       />
     </PostContainer>
   );

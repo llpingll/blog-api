@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useParams } from "react-router-dom";
@@ -6,8 +7,7 @@ import styled from "styled-components";
 import Button from "../Button";
 import Error from "../Error";
 
-// eslint-disable-next-line react/prop-types
-const NewComment = ({ comments, setComments, setShowAddComment }) => {
+const NewComment = ({ setShowAddComment, setReloadComments }) => {
   const [content, setContent] = useState("");
   const [errors, setErrors] = useState(null);
 
@@ -36,10 +36,8 @@ const NewComment = ({ comments, setComments, setShowAddComment }) => {
         const err = await response.json();
         throw err;
       }
-
-      const newComment = await response.json();
-      setComments([newComment, ...comments]);
       setShowAddComment(false);
+      setReloadComments(true);
     } catch (error) {
       if (error.errors) {
         // Server returned error
