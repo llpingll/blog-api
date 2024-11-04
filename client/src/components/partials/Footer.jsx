@@ -6,7 +6,7 @@ const Footer = () => {
     <FooterDiv>
       <p>||Ping|| © 2024</p>
       <Link href="https://github.com/llpingll">
-        <FaGithub />
+        <StyledIcon />
       </Link>
     </FooterDiv>
   );
@@ -18,21 +18,25 @@ const FooterDiv = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;
-  /* position: absolute;
-  left: 0;
-  bottom: 0; */
   padding: 0.5rem;
+  gap: 0.6rem;
 `;
 
 const Link = styled.a`
   display: flex;
-  padding-bottom: 0.3rem;
-  margin-left: 0.7rem;
+`;
+
+const StyledIcon = styled(FaGithub)`
+  color: black;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease-in-out;
 
   &:hover {
+    transform: rotate(360deg) scale(1.1);
   }
 
   &:active {
+    color: #666;
   }
 `;
 
