@@ -135,7 +135,7 @@ const EditPost = () => {
           { name: "published", value: post.published, type: "checkbox" },
         ]}
         handleSubmit={handleSubmit}
-        handlechange={handleChange}
+        handleChange={handleChange}
         errors={postErrors}
         form={"edit"}
       />

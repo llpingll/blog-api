@@ -80,7 +80,7 @@ const Login = () => {
           { name: "password", value: password, type: "text" },
         ]}
         handleSubmit={handleSubmit}
-        handlechange={handleChange}
+        handleChange={handleChange}
         errors={errors}
         form={"login"}
       />
