@@ -87,7 +87,7 @@ const NewPost = () => {
           { name: "published", value: published, type: "checkbox" },
         ]}
         handleSubmit={handleSubmit}
-        handlechange={handleChange}
+        handleChange={handleChange}
         errors={errors}
         form={"new"}
       />

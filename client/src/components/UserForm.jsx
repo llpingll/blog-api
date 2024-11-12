@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Error from "./Error";
 
-const UserForm = ({ values, handlechange, handleSubmit, errors, form }) => {
+const UserForm = ({ values, handleChange, handleSubmit, errors, form }) => {
   // Create form with inputs
   return (
     <LoginContainer>
@@ -30,7 +30,7 @@ const UserForm = ({ values, handlechange, handleSubmit, errors, form }) => {
               key={index}
               name={input.name}
               value={input.value}
-              handleChange={handlechange}
+              handleChange={handleChange}
               type={input.type}
             />
           );

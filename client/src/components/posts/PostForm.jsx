@@ -4,7 +4,7 @@ import Button from "../Button";
 import styled from "styled-components";
 import Error from "../Error";
 
-const PostForm = ({ values, handlechange, handleSubmit, errors, form }) => {
+const PostForm = ({ values, handleChange, handleSubmit, errors, form }) => {
   return (
     <FormContainer>
       <div className="heading">
@@ -26,7 +26,7 @@ const PostForm = ({ values, handlechange, handleSubmit, errors, form }) => {
               key={index}
               name={input.name}
               value={input.value}
-              handleChange={handlechange}
+              handleChange={handleChange}
               type={input.type}
             />
           );
