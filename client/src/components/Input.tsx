@@ -1,7 +1,16 @@
 import styled from "styled-components";
+import { Stringifier } from "styled-components/dist/types";
 
-// eslint-disable-next-line react/prop-types
-const Input = ({ name, value, handleChange, type }) => {
+type InputProps = {
+  name: string;
+  value: string | boolean;
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  type: "text" | "textarea" | "url" | "checkbox";
+};
+
+const Input = ({ name, value, handleChange, type }: InputProps) => {
   return (
     <Label>
       {type === "checkbox" ? (
@@ -9,7 +18,7 @@ const Input = ({ name, value, handleChange, type }) => {
           <legend>{name}</legend>
           <CheckboxInput
             name={name}
-            checked={value}
+            checked={value as boolean}
             onChange={handleChange}
             type={type}
           />
@@ -20,14 +29,14 @@ const Input = ({ name, value, handleChange, type }) => {
           {type === "textarea" ? (
             <TextArea
               name={name}
-              value={value}
+              value={value as string}
               onChange={handleChange}
               required
             />
           ) : (
             <TxtInput
               name={name}
-              value={value}
+              value={value as string}
               onChange={handleChange}
               type={type}
               required={type !== "url"}

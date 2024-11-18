@@ -1,7 +1,10 @@
-/* eslint-disable react/prop-types */
 import styled from "styled-components";
 
-const Error = ({ errors }) => {
+type ErrorProps = {
+  errors: { msg: string }[];
+};
+
+const Error = ({ errors }: ErrorProps) => {
   return (
     <Err>
       {errors.map((err, index) => (

@@ -49,7 +49,10 @@ const PostDetail = () => {
         )}
       </div>
 
-      <p className="content">{post.content}</p>
+      <div
+        className="content"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      ></div>
       {user && user.type === "admin" && (
         <Link className="edit" to={`/admin/edit/${id}`}>
           <Button value={"Edit"} />

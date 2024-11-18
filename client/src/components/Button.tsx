@@ -1,9 +1,14 @@
 import styled from "styled-components";
 
-// eslint-disable-next-line react/prop-types
-const Button = ({ value, type, action }) => {
+type ButtonProps = {
+  value: string;
+  type: "button" | "submit" | "reset";
+  action?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+};
+
+const Button = ({ value, type, action }: ButtonProps) => {
   return (
-    <ButtonGeneric onClick={action || null} type={type}>
+    <ButtonGeneric onClick={action} type={type}>
       {value}
     </ButtonGeneric>
   );

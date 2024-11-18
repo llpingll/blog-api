@@ -1,11 +1,31 @@
 /* eslint-disable react/prop-types */
-import Input from "../components/Input";
-import Button from "../components/Button";
+import Input from "./Input";
+import Button from "./Button";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import Error from "./Error";
 
-const UserForm = ({ values, handleChange, handleSubmit, errors, form }) => {
+type FormProps = {
+  values: {
+    name: string;
+    value: string;
+    type: "text" | "textarea" | "url" | "checkbox";
+  }[];
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  errors: { msg: string }[];
+  form: "signup" | "login";
+};
+
+const UserForm = ({
+  values,
+  handleChange,
+  handleSubmit,
+  errors,
+  form,
+}: FormProps) => {
   // Create form with inputs
   return (
     <LoginContainer>

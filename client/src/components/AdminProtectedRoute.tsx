@@ -1,13 +1,14 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./provider/AuthProvider";
 import CommonLayout from "../pages/CommonLayout";
+import Loader from "./Loader";
 
 const AdminProtectedRoute = () => {
   const { token, user } = useAuth();
   const location = useLocation();
 
   if (token && !user) {
-    return <div>Loading...</div>; // Optional loading state
+    return <Loader />;
   }
 
   return user && user.type === "admin" ? (

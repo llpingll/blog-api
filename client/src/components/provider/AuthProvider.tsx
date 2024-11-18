@@ -1,17 +1,41 @@
-import { useState, useContext, createContext, useMemo, useEffect } from "react";
+import {
+  useState,
+  useContext,
+  createContext,
+  useMemo,
+  useEffect,
+  ReactNode,
+} from "react";
 import { jwtDecode } from "jwt-decode";
 
+type AuthContextType = {
+  token: string | null;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    type: string;
+    iat: number;
+    exp: number;
+  } | null;
+  setToken: (newToken: string | null) => void;
+  getAuthHeaders: () => { authorization: string } | {};
+};
+
+type AuthProviderProps = {
+  children: ReactNode; // Explicitly typing children
+};
+
 // Create the AuthContext
-const AuthContext = createContext();
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // The AuthProvider component that will wrap components where authentication is needed
-// eslint-disable-next-line react/prop-types
-const AuthProvider = ({ children }) => {
+const AuthProvider = ({ children }: AuthProviderProps) => {
   const [token, setToken_] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState(null);
 
   // Function to update the token in state and local storage
-  const setToken = (newToken) => {
+  const setToken = (newToken: string | null) => {
     setToken_(newToken);
   };
 
@@ -50,9 +74,8 @@ const AuthProvider = ({ children }) => {
 };
 
 // Hook to allow easy access to the AuthContext
-// eslint-disable-next-line react-refresh/only-export-components
-export const useAuth = () => {
-  return useContext(AuthContext);
+export const useAuth = (): AuthContextType => {
+  return useContext(AuthContext)!; // `!` tells TypeScript you're confident this won't be null/undefined.
 };
 
 export default AuthProvider;
