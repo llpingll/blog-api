@@ -55,7 +55,7 @@ const PostDetail = () => {
       ></div>
       {user && user.type === "admin" && (
         <Link className="edit" to={`/admin/edit/${id}`}>
-          <Button value={"Edit"} />
+          <Button type={"button"} value={"Edit"} />
         </Link>
       )}
       <Comments

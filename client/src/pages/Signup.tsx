@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserForm from "../components/UserForm";
 
@@ -6,10 +6,12 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<{ msg: string }[] | null>(null);
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
 
     switch (name) {
@@ -25,7 +27,7 @@ const Signup = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = {
@@ -56,9 +58,9 @@ const Signup = () => {
       // Redirect to login page
       navigate("/login");
     } catch (error) {
-      if (error.errors) {
+      if (typeof error === "object" && error !== null && "errors" in error) {
         // Server returned error
-        setErrors(error.errors);
+        setErrors((error as { errors: { msg: string }[] }).errors);
       } else if (error instanceof TypeError) {
         // Network error
         setErrors([{ msg: "Network or server down, please check connection" }]);
@@ -79,7 +81,7 @@ const Signup = () => {
         { name: "password", value: password, type: "text" },
       ]}
       handleSubmit={handleSubmit}
-      handlechange={handleChange}
+      handleChange={handleChange}
       errors={errors}
       form={"signup"}
     />

@@ -3,9 +3,21 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 
+type PostType = {
+  image_url: string;
+  title: string;
+  author: {
+    name: string;
+  };
+  created_at: Date;
+  published: boolean;
+  content: string;
+  _id: string;
+}[];
+
 const usePosts = () => {
-  const [posts, setPosts] = useState([]);
-  const [errors, setErrors] = useState(null);
+  const [posts, setPosts] = useState<PostType | []>([]);
+  const [errors, setErrors] = useState<{ msg: string }[] | null>(null);
   const [loading, setLoading] = useState(true);
 
   const { getAuthHeaders } = useAuth();
@@ -33,9 +45,9 @@ const usePosts = () => {
         const data = await response.json();
         setPosts(data);
       } catch (error) {
-        if (error.errors) {
+        if (typeof error === "object" && error !== null && "errors" in error) {
           // Server returned error
-          setErrors(error.errors);
+          setErrors((error as { errors: { msg: string }[] }).errors);
         } else if (error instanceof TypeError) {
           // Network error
           setErrors([

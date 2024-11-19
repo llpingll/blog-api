@@ -7,7 +7,7 @@ type InputProps = {
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
-  type: "text" | "textarea" | "url" | "checkbox";
+  type: "text" | "textarea" | "url" | "checkbox" | "email";
 };
 
 const Input = ({ name, value, handleChange, type }: InputProps) => {

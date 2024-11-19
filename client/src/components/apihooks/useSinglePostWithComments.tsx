@@ -2,11 +2,36 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../provider/AuthProvider";
 import { useParams } from "react-router-dom";
 
+type PostType = {
+  image_url: string;
+  title: string;
+  author: {
+    name: string;
+  };
+  created_at: Date;
+  published: boolean;
+  content: string;
+  _id: string;
+};
+
+type CommentType = {
+  content: string;
+  post: {
+    _id: string;
+  };
+  timestamp: Date;
+  user: {
+    name: string;
+  };
+};
+
 const useSinglePostWithComments = () => {
-  const [post, setPost] = useState(null);
-  const [comments, setComments] = useState([]);
-  const [postErrors, setPostErrors] = useState(null);
-  const [commentErrors, setCommentErrors] = useState(null);
+  const [post, setPost] = useState<PostType | null>(null);
+  const [comments, setComments] = useState<CommentType | []>([]);
+  const [postErrors, setPostErrors] = useState<{ msg: string }[] | null>(null);
+  const [commentErrors, setCommentErrors] = useState<{ msg: string }[] | null>(
+    null
+  );
   const [loading, setLoading] = useState(true);
   const [reloadComments, setReloadComments] = useState(false);
 

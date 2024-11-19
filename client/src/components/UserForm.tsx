@@ -9,13 +9,13 @@ type FormProps = {
   values: {
     name: string;
     value: string;
-    type: "text" | "textarea" | "url" | "checkbox";
+    type: "text" | "textarea" | "url" | "checkbox" | "email";
   }[];
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  errors: { msg: string }[];
+  errors: { msg: string }[] | null;
   form: "signup" | "login";
 };
 
