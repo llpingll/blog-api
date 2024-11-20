@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 import PostForm from "./PostForm";
@@ -8,13 +8,21 @@ const NewPost = () => {
   const [content, setContent] = useState("");
   const [image_url, setImageURL] = useState("");
   const [published, setPublished] = useState(false);
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState<{ msg: string }[] | []>([]);
 
   const { getAuthHeaders } = useAuth();
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value, checked } = e.target;
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+
+    if (e.target instanceof HTMLInputElement && e.target.type === "checkbox") {
+      // Handle checkbox input
+      setPublished(e.target.checked);
+      return;
+    }
 
     switch (name) {
       case "title":
@@ -26,13 +34,10 @@ const NewPost = () => {
       case "image_url":
         setImageURL(value);
         break;
-      case "published":
-        setPublished(checked);
-        break;
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = {
@@ -62,9 +67,9 @@ const NewPost = () => {
       const post = await response.json();
       navigate(`/post/${post._id}`);
     } catch (error) {
-      if (error.errors) {
+      if (typeof error === "object" && error !== null && "errors" in error) {
         // Server returned error
-        setErrors(error.errors);
+        setErrors((error as { errors: { msg: string }[] }).errors);
       } else if (error instanceof TypeError) {
         // Network error
         setErrors([{ msg: "Network or server down, please check connection" }]);

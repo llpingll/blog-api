@@ -1,10 +1,30 @@
-/* eslint-disable react/prop-types */
 import Input from "../Input";
 import Button from "../Button";
 import styled from "styled-components";
 import Error from "../Error";
+import React from "react";
 
-const PostForm = ({ values, handleChange, handleSubmit, errors, form }) => {
+type FormProps = {
+  values: {
+    name: string;
+    value: string | boolean;
+    type: "text" | "textarea" | "url" | "checkbox";
+  }[];
+  handleChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  errors: { msg: string }[] | null;
+  form: "edit" | "new";
+};
+
+const PostForm = ({
+  values,
+  handleChange,
+  handleSubmit,
+  errors,
+  form,
+}: FormProps) => {
   return (
     <FormContainer>
       <div className="heading">

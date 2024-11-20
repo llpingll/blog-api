@@ -2,7 +2,21 @@
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-const PostCard = ({ post }) => {
+type PostType = {
+  post: {
+    image_url: string;
+    title: string;
+    author: {
+      name: string;
+    };
+    created_at: Date;
+    published: boolean;
+    content: string;
+    _id: string;
+  };
+};
+
+const PostCard = ({ post }: PostType) => {
   const isAdminRoute = useLocation().pathname.includes("admin");
 
   return (

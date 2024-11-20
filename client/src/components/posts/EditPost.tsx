@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 import { useParams } from "react-router-dom";
@@ -13,8 +13,8 @@ const EditPost = () => {
     image_url: "",
     published: false,
   });
-  const [getErrors, setGetErrors] = useState(null);
-  const [postErrors, setPostErrors] = useState(null);
+  const [getErrors, setGetErrors] = useState<{ msg: string }[] | null>(null);
+  const [postErrors, setPostErrors] = useState<{ msg: string }[] | null>(null);
   const [loading, setLoading] = useState(true);
 
   const { getAuthHeaders } = useAuth();
@@ -46,9 +46,9 @@ const EditPost = () => {
           published: data.published,
         });
       } catch (error) {
-        if (error.errors) {
+        if (typeof error === "object" && error !== null && "errors" in error) {
           // Server returned error
-          setGetErrors(error.errors);
+          setGetErrors((error as { errors: { msg: string }[] }).errors);
         } else if (error instanceof TypeError) {
           // Network error
           setGetErrors([
@@ -69,12 +69,17 @@ const EditPost = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value, type } = e.target;
 
     setPost((prevPost) => ({
       ...prevPost,
-      [name]: type === "checkbox" ? checked : value, // Correctly handle checkbox
+      [name]:
+        type === "checkbox"
+          ? (e.target as HTMLInputElement).checked // Narrowing for checkboxes
+          : value, // Use value for other inputs
     }));
   };
 
@@ -88,7 +93,7 @@ const EditPost = () => {
   // If post is null or undefined, return early
   if (!post) return <div>Post Not Found</div>;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -108,9 +113,9 @@ const EditPost = () => {
       const updatedPost = await response.json();
       navigate(`/post/${updatedPost._id}`);
     } catch (error) {
-      if (error.errors) {
+      if (typeof error === "object" && error !== null && "errors" in error) {
         // Server returned error
-        setPostErrors(error.errors);
+        setPostErrors((error as { errors: { msg: string }[] }).errors);
       } else if (error instanceof TypeError) {
         // Network error
         setPostErrors([

@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Stringifier } from "styled-components/dist/types";
 
 type InputProps = {
   name: string;
