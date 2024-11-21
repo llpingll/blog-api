@@ -23,6 +23,7 @@ type CommentsType = {
   user: {
     name: string;
   };
+  _id: string;
 }[];
 
 const useSinglePostWithComments = () => {
