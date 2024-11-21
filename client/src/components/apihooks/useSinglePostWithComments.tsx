@@ -14,7 +14,7 @@ type PostType = {
   _id: string;
 };
 
-type CommentType = {
+type CommentsType = {
   content: string;
   post: {
     _id: string;
@@ -23,11 +23,11 @@ type CommentType = {
   user: {
     name: string;
   };
-};
+}[];
 
 const useSinglePostWithComments = () => {
   const [post, setPost] = useState<PostType | null>(null);
-  const [comments, setComments] = useState<CommentType | []>([]);
+  const [comments, setComments] = useState<CommentsType | []>([]);
   const [postErrors, setPostErrors] = useState<{ msg: string }[] | null>(null);
   const [commentErrors, setCommentErrors] = useState<{ msg: string }[] | null>(
     null

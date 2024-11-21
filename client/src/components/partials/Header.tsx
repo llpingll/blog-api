@@ -23,17 +23,22 @@ const Header = () => {
             </Logo>
           </Link>
           {user && user.type === "admin" && (
-            <Button value={"Admin"} action={() => navigate("/admin")} />
+            <Button
+              value={"Admin"}
+              type={"button"}
+              action={() => navigate("/admin")}
+            />
           )}
         </Nav>
         {!user ? (
           <Link to={"login"} state={{ path: location.pathname }}>
-            <Button value={"Log In"} />
+            <Button type={"button"} value={"Log In"} />
           </Link>
         ) : (
           <div className="header-right">
             {isAdminRoute && (
               <Button
+                type={"button"}
                 value={"Add Post"}
                 action={() => navigate("/admin/new")}
               />
@@ -46,7 +51,7 @@ const Header = () => {
             </button>
           </div>
         )}
-        {showAccount && (
+        {showAccount && user && (
           <AccountDetails>
             <UserInfo>
               <p>Signed in as</p>
@@ -56,6 +61,7 @@ const Header = () => {
             <hr />
             <div className="logout">
               <Button
+                type={"button"}
                 value={"Logout"}
                 action={() => {
                   setShowAccount(!showAccount);

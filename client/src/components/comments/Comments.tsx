@@ -8,13 +8,34 @@ import Button from "../Button";
 import Loader from "../Loader";
 import Error from "../Error";
 
+type CommentsType = {
+  content: string;
+  post: {
+    _id: string;
+  };
+  timestamp: Date;
+  user: {
+    name: string;
+  };
+}[];
+
+type CommentProps = {
+  comments: CommentsType;
+  commentErrors:
+    | {
+        msg: string;
+      }[]
+    | null;
+  loading: boolean;
+  setReloadComments: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 const Comments = ({
   comments,
-  setComments,
   commentErrors,
   loading,
   setReloadComments,
-}) => {
+}: CommentProps) => {
   const [showAddComment, setShowAddComment] = useState(false);
   const { user } = useAuth();
   const location = useLocation();
@@ -30,8 +51,6 @@ const Comments = ({
       <div>
         {user && showAddComment ? (
           <NewComment
-            comments={comments}
-            setComments={setComments}
             setShowAddComment={setShowAddComment}
             setReloadComments={setReloadComments}
           />

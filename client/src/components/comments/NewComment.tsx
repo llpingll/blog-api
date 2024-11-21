@@ -7,14 +7,22 @@ import styled from "styled-components";
 import Button from "../Button";
 import Error from "../Error";
 
-const NewComment = ({ setShowAddComment, setReloadComments }) => {
+type NewCommentProps = {
+  setShowAddComment: React.Dispatch<React.SetStateAction<boolean>>;
+  setReloadComments: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const NewComment = ({
+  setShowAddComment,
+  setReloadComments,
+}: NewCommentProps) => {
   const [content, setContent] = useState("");
-  const [errors, setErrors] = useState(null);
+  const [errors, setErrors] = useState<{ msg: string }[] | null>(null);
 
   const { id } = useParams();
   const { getAuthHeaders } = useAuth();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = {
@@ -39,9 +47,9 @@ const NewComment = ({ setShowAddComment, setReloadComments }) => {
       setShowAddComment(false);
       setReloadComments(true);
     } catch (error) {
-      if (error.errors) {
+      if (typeof error === "object" && error !== null && "errors" in error) {
         // Server returned error
-        setErrors(error.errors);
+        setErrors((error as { errors: { msg: string }[] }).errors);
       } else if (error instanceof TypeError) {
         // Network error
         setErrors([{ msg: "Network or server down, please check connection" }]);
@@ -64,10 +72,9 @@ const NewComment = ({ setShowAddComment, setReloadComments }) => {
         name="content"
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        type="textarea"
       />
       <div className="button">
-        <Button value={"submit"} type={"sumbit"} />
+        <Button value={"submit"} type={"submit"} />
       </div>
     </Form>
   );

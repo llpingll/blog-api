@@ -12,7 +12,6 @@ const PostDetail = () => {
     post,
     postErrors,
     comments,
-    setComments,
     commentErrors,
     loading,
     setReloadComments,
@@ -60,7 +59,6 @@ const PostDetail = () => {
       )}
       <Comments
         comments={comments}
-        setComments={setComments}
         commentErrors={commentErrors}
         loading={loading}
         setReloadComments={setReloadComments}
